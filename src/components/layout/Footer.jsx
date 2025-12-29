@@ -40,31 +40,16 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Map Integration */}
-                    <div className="lg:col-span-1">
-                        <h4 className="text-white font-bold text-lg mb-6 tracking-wide">Our Location</h4>
-                        <div className="w-full h-64 md:h-48 rounded-lg overflow-hidden border border-slate-800 relative group shadow-lg shadow-cyan-900/20">
-                            <iframe
-                                title="Office Location"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.347263595567!2d76.9889976757065!3d11.006997092116035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859eb03584a43%3A0x32befeb42d4f385a!2sInfolexus%20Solutions!5e0!3m2!1sen!2sin!4v1713437292323!5m2!1sen!2sin"
-                                className="w-full h-full hover:scale-105 transition-transform duration-700"
-                                allowFullScreen=""
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                            ></iframe>
-                        </div>
-                    </div>
-
-                    {/* Quick Links */}
+                    {/* Quick Links (Company) */}
                     <div>
                         <h4 className="text-white font-bold text-lg mb-6 tracking-wide">Company</h4>
                         <ul className="space-y-3">
                             {[
                                 { name: 'Home', path: '/' },
-                                { name: 'About Us', path: '/about' },
-                                { name: 'Why Choose Us', path: '/about' },
-                                { name: 'Our Team', path: '/about' },
-                                { name: 'Careers', path: '/careers' }
+                                { name: 'About', path: '/about' },
+                                { name: 'Technologies', path: '/technologies' },
+                                { name: 'Clients', path: '/clients' },
+                                { name: 'Career', path: '/careers' }
                             ].map((link) => (
                                 <li key={link.name}>
                                     <Link to={link.path} className="text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-1 group">
@@ -76,7 +61,7 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Newsletter & Contact */}
+                    {/* Newsletter & Contact (Stay Connected) */}
                     <div>
                         <h4 className="text-white font-bold text-lg mb-6 tracking-wide">Stay Connected</h4>
                         <p className="text-slate-400 text-sm mb-4">Subscribe to our newsletter for the latest tech trends and insights.</p>
@@ -100,6 +85,21 @@ const Footer = () => {
                                 <Mail size={18} className="text-cyan-500 group-hover:text-cyan-400" />
                                 <span className="group-hover:text-slate-200 transition-colors">info@infolexus.com</span>
                             </div>
+                        </div>
+                    </div>
+
+                    {/* Map Integration (Our Location) */}
+                    <div className="lg:col-span-1">
+                        <h4 className="text-white font-bold text-lg mb-6 tracking-wide">Our Location</h4>
+                        <div className="w-full h-64 md:h-48 rounded-lg overflow-hidden border border-slate-800 relative group shadow-lg shadow-cyan-900/20">
+                            <iframe
+                                title="Office Location"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.347263595567!2d76.9889976757065!3d11.006997092116035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859eb03584a43!2sInfolexus%20Solutions!5e0!3m2!1sen!2sin!4v1713437292323!5m2!1sen!2sin"
+                                className="w-full h-full hover:scale-105 transition-transform duration-700"
+                                allowFullScreen=""
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                            ></iframe>
                         </div>
                     </div>
 

@@ -44,17 +44,41 @@ const FloatingSocialBar = () => {
 
     return (
         <div
-            className="fixed right-4 bottom-8 z-50 flex flex-col items-center gap-3 pointer-events-auto"
+            className="fixed right-4 bottom-6 z-50 flex flex-col items-center gap-3 pointer-events-auto"
             onMouseLeave={() => setIsOpen(false)}
         >
+            {/* Desktop: Always Visible Links */}
+            <div className="hidden lg:flex flex-col gap-3 items-center mb-2">
+                {socialLinks.map((item, index) => (
+                    <a
+                        key={`desktop-${index}`}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center justify-center w-10 h-10 ${item.bg} text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300`}
+                    >
+                        <item.icon size={18} />
+                    </a>
+                ))}
+                <a
+                    href="https://wa.me/yourphonenumber"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center w-10 h-10 bg-[#25D366] text-white rounded-full shadow-lg hover:shadow-[#25D366]/40 hover:scale-110 transition-all duration-300"
+                >
+                    <RiWhatsappLine size={20} />
+                </a>
+            </div>
+
+            {/* Mobile/Tablet: Toggleable Links */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                        initial={{ opacity: 0, y: 10, scale: 0.8 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 20, scale: 0.8 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
-                        className="flex flex-col gap-3 items-center mb-2"
+                        className="flex lg:hidden flex-col gap-3 items-center mb-2"
                     >
                         {socialLinks.map((item, index) => (
                             <a
@@ -67,7 +91,6 @@ const FloatingSocialBar = () => {
                                 <item.icon size={18} />
                             </a>
                         ))}
-                        {/* WhatsApp in the list */}
                         <a
                             href="https://wa.me/yourphonenumber"
                             target="_blank"
@@ -80,10 +103,10 @@ const FloatingSocialBar = () => {
                 )}
             </AnimatePresence>
 
-            {/* Main Toggle / Social Button - Always Visible */}
+            {/* Main Toggle / Social Button - Mobile/Tablet Only */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-center w-12 h-12 bg-[#020617] border border-white/20 text-white rounded-full shadow-2xl hover:bg-cyan-600 hover:border-cyan-500 transition-all duration-300 group z-50"
+                className="lg:hidden flex items-center justify-center w-12 h-12 bg-[#020617] border border-white/20 text-white rounded-full shadow-2xl hover:bg-cyan-600 hover:border-cyan-500 transition-all duration-300 group z-50 order-first"
             >
                 <div className={`transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
                     <span className="block w-5 h-0.5 bg-white mb-1"></span>
@@ -92,16 +115,15 @@ const FloatingSocialBar = () => {
                 </div>
             </button>
 
-            {/* Back to Top Button - Only on Scroll */}
+            {/* Back to Top Button - BELOW Hamburger */}
             <AnimatePresence>
                 {showTopBtn && (
                     <motion.button
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0 }}
+                        initial={{ opacity: 0, scale: 0, y: -20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0, y: -20 }}
                         onClick={scrollToTop}
-                        className="absolute bottom-16 right-0 flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 hover:-translate-y-1 transition-all duration-300"
-                        style={{ right: '4px' }} // Align with center of 12 (48px) vs 10 (40px) -> 4px offset
+                        className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 hover:scale-110 transition-all duration-300"
                     >
                         <ChevronUp size={20} />
                     </motion.button>

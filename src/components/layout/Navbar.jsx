@@ -16,7 +16,7 @@ import { cn } from '../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../../assets/infolexus_logo_transparent.png';
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -143,7 +143,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Desktop Nav - Centered Absolute */}
-                <div className="hidden md:flex items-center justify-center gap-8 lg:gap-10 absolute left-0 top-0 w-full h-full pointer-events-none">
+                <div className="hidden lg:flex items-center justify-center gap-8 lg:gap-10 absolute left-0 top-0 w-full h-full pointer-events-none">
                     {navLinks.map((link) => (
                         <div
                             key={link.name}
@@ -233,7 +233,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Right CTA */}
-                <div className="hidden md:flex items-center gap-6">
+                <div className="hidden lg:flex items-center gap-6">
                     <SocialIcons />
                     <Link to="/contact"
                         className="px-6 py-2 border border-white rounded-full text-xs font-bold text-white hover:bg-white hover:text-black transition-all duration-300">
@@ -244,7 +244,7 @@ const Navbar = () => {
                 {/* Mobile Button - NOW INSIDE FLEX CONTAINER */}
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="md:hidden text-white p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-lg hover:bg-white/20 transition-all"
+                    className="lg:hidden text-white p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-lg hover:bg-white/20 transition-all"
                     aria-label="Toggle Menu"
                 >
                     {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -261,7 +261,7 @@ const Navbar = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 bg-black/60 z-[90] md:hidden backdrop-blur-sm"
+                            className="fixed inset-0 bg-black/60 z-[90] lg:hidden backdrop-blur-sm"
                         />
 
                         {/* Drawer */}
@@ -270,7 +270,7 @@ const Navbar = () => {
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                            className="fixed top-0 right-0 h-full w-[85%] max-w-[320px] bg-[#030B25] z-[100] flex flex-col md:hidden shadow-2xl border-l border-white/10 overflow-y-auto"
+                            className="fixed top-0 right-0 h-full w-[85%] max-w-[320px] bg-[#030B25] z-[100] flex flex-col lg:hidden shadow-2xl border-l border-white/10 overflow-y-auto"
                         >
                             {/* Mobile Header */}
                             <div className="flex justify-between items-center p-6 bg-[#030B25] sticky top-0 z-20">
