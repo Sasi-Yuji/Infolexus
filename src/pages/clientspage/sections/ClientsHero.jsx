@@ -26,16 +26,16 @@ const ClientsHero = () => {
                     >
                         <span className="inline-flex items-center gap-2 py-1 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#00A3FF] text-xs font-bold tracking-widest uppercase mb-8">
                             <Rocket size={12} />
-                            Startup Focused
+                            Your Growth Partner
                         </span>
 
                         <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[1.1] mb-8 text-white">
-                            We Turn Napkin <br />
-                            Sketches Into <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A3FF] to-cyan-400">Unicorns.</span>
+                            We Build Software That <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A3FF] to-cyan-400">Drives Real Results.</span>
                         </h1>
 
                         <p className="text-xl text-slate-200 max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
-                            Infolexus is the tech co-founder you wish you had. We build fast, scalable, and stunning digital products for ambitious startups and founders.
+                            Infolexus is the robust development partner you've been looking for. We deliver scalable, stunning, and efficient digital products tailored to your business goals.
                         </p>
 
                         <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
@@ -44,12 +44,12 @@ const ClientsHero = () => {
                                     to="/contact"
                                     className="inline-flex items-center justify-center px-8 py-4 bg-[#00A3FF] text-white font-bold rounded-xl text-lg shadow-lg shadow-[#00A3FF]/30 hover:bg-[#008ECC] hover:shadow-[#00A3FF]/50 transition-all gap-3"
                                 >
-                                    Build My MVP <ArrowRight size={20} />
+                                    Start Your Project <ArrowRight size={20} />
                                 </Link>
                             </motion.div>
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                 <a
-                                    href="#consultation"
+                                    href="#consultation-form"
                                     className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl text-lg hover:bg-white/20 transition-all"
                                 >
                                     Book Free Consultation

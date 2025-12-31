@@ -7,24 +7,23 @@ const ServiceHero = ({ service, id }) => {
     return (
         <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-950 pt-20">
             {/* Background Image & Overlays matching Tech/DM Hero style */}
-            <div className="absolute inset-0 z-0 bg-black">
+            {/* Background Image & Overlays matching Tech/DM Hero style */}
+            {/* Background Image & Overlays */}
+            <div className="absolute inset-0 z-0 bg-slate-950">
                 <img
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-cover md:object-contain object-right opacity-100"
-                    style={{
-                        maskImage: 'linear-gradient(to right, transparent 0%, black 80%)',
-                        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 80%)'
-                    }}
+                    className="w-full h-full object-cover object-center opacity-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
+                {/* Full Dark Overlay for text readability */}
+                <div className="absolute inset-0 bg-slate-950/80" />
+                {/* Gradient for extra depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/50" />
             </div>
 
             <div className="container mx-auto px-6 md:px-12 relative z-10 w-full">
                 <div className="max-w-4xl">
-                    <Link to="/services" className="inline-flex items-center gap-2 text-slate-400 hover:text-cyan-400 mb-8 transition-colors group text-sm font-medium tracking-wide">
-                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Services
-                    </Link>
+                    {/* Back to Services link removed */}
 
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}

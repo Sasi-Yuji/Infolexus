@@ -9,6 +9,7 @@ import webDevImg from '../assets/webimage.jpeg';
 import cloudImg from '../assets/unnamed.jpg';
 import testingImg from '../assets/testing_qa_v2.png';
 import itSupportImg from '../assets/it_support_247_v2.png';
+import cyberSecImg from '../assets/cyber_security_hero.png';
 
 export const serviceDetails = {
     'ma-01': {
@@ -260,6 +261,6 @@ export const serviceDetails = {
             { title: "Respond", desc: "Rapid action on detected threats." }
         ],
         technologies: ["Splunk", "CrowdStrike", "Wireshark", "Nessus", "Burp Suite", "AWS Security Hub"],
-        image: itSupportImg // Reusing IT support image as placeholder if no specific one
+        image: cyberSecImg
     }
 };

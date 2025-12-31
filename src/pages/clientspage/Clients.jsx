@@ -3,8 +3,8 @@ import ClientsHero from './sections/ClientsHero';
 import ClientsProjectShowcase from './sections/ClientsProjectShowcase';
 import ClientImpact from './sections/ClientImpact';
 import EngagementModels from './sections/EngagementModels';
-
 import MarketsWeServe from './sections/MarketsWeServe';
+import ServiceInquiryForm from '../servicedetailpage/sections/ServiceInquiryForm';
 
 const Clients = () => {
     useEffect(() => {
@@ -20,6 +20,7 @@ const Clients = () => {
 
 
             <EngagementModels />
+            <ServiceInquiryForm id="consultation-form" />
             <MarketsWeServe />
         </div>
     );

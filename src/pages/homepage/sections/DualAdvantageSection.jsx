@@ -39,7 +39,7 @@ const DualAdvantageSection = () => {
              WHY INFOLEXUS: DUAL ADVANTAGE
         ========================================
         */
-        <section className="py-24 bg-white overflow-hidden relative">
+        <section id="our-services" className="py-24 bg-white overflow-hidden relative">
             {/* Full Width Particles Background */}
             <div className="absolute inset-0 z-0">
                 <Particles particleCount={150} particleColor="rgba(15, 23, 42, 0.1)" lineColor="rgba(15, 23, 42, 0.05)" />

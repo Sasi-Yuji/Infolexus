@@ -114,7 +114,7 @@ const categories = [
 
 const TechCategories = () => {
     return (
-        <section className="py-24 bg-slate-50">
+        <section id="tech-stack" className="py-24 bg-slate-50">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="grid grid-cols-1 gap-12">
                     {categories.map((category, idx) => (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import HRHero from './sections/HRHero';
 import HRServiceSection from './sections/HRServiceSection';
 import HRInquiryModal from './components/HRInquiryModal';
+import HRCompanyBanner from './sections/HRCompanyBanner';
 import { hrServiceDetails } from '../../data/hrServiceDetails';
 
 const HRServices = () => {
@@ -47,6 +48,8 @@ const HRServices = () => {
                 initialCategory={modalCategory}
                 initialSubject={modalSubject}
             />
+
+            <HRCompanyBanner />
         </div>
     );
 };

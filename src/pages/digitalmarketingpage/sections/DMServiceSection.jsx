@@ -77,12 +77,7 @@ const DMServiceSection = ({ title, subtitle, items, id, bgColor = "bg-white", is
                                     </ul>
                                 )}
 
-                                <Link
-                                    to={`/dm-services/${item.id}`}
-                                    className="inline-flex items-center text-white bg-blue-600 px-6 py-3 rounded-full font-bold hover:bg-blue-700 transition-colors uppercase tracking-wider text-sm group shadow-lg hover:shadow-blue-500/30"
-                                >
-                                    Explore Service <span className="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
-                                </Link>
+                                {/* Explore Service button removed */}
                             </motion.div>
                         </motion.div>
                     );

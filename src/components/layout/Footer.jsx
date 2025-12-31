@@ -12,17 +12,7 @@ const Footer = () => {
             <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-indigo-900/10 rounded-full blur-[100px] translate-y-1/2 pointer-events-none" />
 
             <div className="container mx-auto px-6 md:px-12 relative z-10">
-                {/* Top CTA Section (Optional visual separator) */}
-                <div className="flex flex-col md:flex-row items-center justify-between pb-16 border-b border-slate-900/80 mb-16 gap-8">
-                    <div>
-                        <h2 className="text-3xl font-bold text-white mb-2">Ready to transform your business?</h2>
-                        <p className="text-slate-400">Let's build something extraordinary together.</p>
-                    </div>
-                    <Link to="/contact" className="px-8 py-3 bg-white text-slate-950 font-bold rounded-full hover:bg-slate-200 transition-colors flex items-center gap-2">
-                        Get Started <ArrowRight size={18} />
-                    </Link>
-                </div>
-
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
 
                     {/* Brand Column (Span 4) */}

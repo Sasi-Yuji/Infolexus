@@ -73,13 +73,13 @@ const Hero = () => {
 
                     {/* Shimmer Border Button - Build With Us & Explore Services */}
                     <div className="mb-10 animate-fade-up-delay-3 flex flex-wrap gap-4">
-                        <Link
-                            to="/services"
+                        <a
+                            href="#our-services"
                             className="px-8 py-3 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all text-white font-medium hover:scale-105 shadow-lg shadow-black/10 flex items-center gap-2 group/btn"
                         >
                             Explore Expertise
                             <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 text-cyan-400" />
-                        </Link>
+                        </a>
                         <Link
                             to="/contact"
                             className="group relative px-8 py-3 rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold tracking-wider uppercase text-sm shadow-[0_0_15px_rgba(6,182,212,0.5)] hover:shadow-[0_0_30px_rgba(6,182,212,0.8)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"

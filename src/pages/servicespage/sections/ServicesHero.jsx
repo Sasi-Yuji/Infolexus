@@ -9,18 +9,17 @@ const ServicesHero = () => {
     return (
         <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20">
             {/* Background Image & Overlays */}
-            <div className="absolute inset-0 z-0 bg-black">
+            {/* Background Image & Overlays */}
+            <div className="absolute inset-0 z-0 bg-slate-950">
                 <img
                     src={heroBg}
                     alt="Global Tech Network"
-                    className="w-full h-full object-contain object-right opacity-100"
-                    style={{
-                        maskImage: 'linear-gradient(to right, transparent 20%, black 100%)',
-                        WebkitMaskImage: 'linear-gradient(to right, transparent 20%, black 100%)'
-                    }}
+                    className="w-full h-full object-cover object-center opacity-100"
                 />
-                {/* Gradient Overlay for blending */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+                {/* Full Dark Overlay for text readability */}
+                <div className="absolute inset-0 bg-slate-950/80" />
+                {/* Gradient for extra depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/50" />
             </div>
 
             <div className="container mx-auto px-4 md:px-6 relative z-10">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Send, Loader2, Info } from 'lucide-react';
 
-const ServiceInquiryForm = () => {
+const ServiceInquiryForm = ({ id }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
 
@@ -13,7 +13,11 @@ const ServiceInquiryForm = () => {
         role: '',
         location: '',
         orgType: '',
-        assistance: ''
+        assistance: '',
+        howDidYouHear: '',
+        orgTypeOther: '',
+        howDidYouHearOther: '',
+        assistanceOther: ''
     });
 
     const handleChange = (e) => {
@@ -38,6 +42,10 @@ const ServiceInquiryForm = () => {
                 body: JSON.stringify({
                     _subject: `Service Inquiry: ${formData.company}`,
                     ...formData,
+                    // Override fields if 'Other' is selected to send the typed value
+                    orgType: formData.orgType === 'Other' ? formData.orgTypeOther : formData.orgType,
+                    howDidYouHear: formData.howDidYouHear === 'Other' ? formData.howDidYouHearOther : formData.howDidYouHear,
+                    assistance: formData.assistance === 'Other' ? formData.assistanceOther : formData.assistance,
                     _template: 'table',
                     _captcha: "false",
                     _autoresponse: "Thanks for your inquiry! We'll be in touch soon."
@@ -49,7 +57,8 @@ const ServiceInquiryForm = () => {
                 setIsSubmitting(false);
                 setFormData({
                     name: '', email: '', company: '', phone: '',
-                    role: '', location: '', orgType: '', assistance: ''
+                    role: '', location: '', orgType: '', assistance: '', howDidYouHear: '',
+                    orgTypeOther: '', assistanceOther: '', howDidYouHearOther: ''
                 });
                 setTimeout(() => setSubmitStatus(null), 5000);
             } else {
@@ -63,7 +72,7 @@ const ServiceInquiryForm = () => {
     };
 
     return (
-        <section className="py-20 bg-[#081A4A] text-white">
+        <section id={id} className="py-20 bg-[#081A4A] text-white">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-5xl font-black mb-4">Start Your Digital Transformation</h2>
@@ -124,17 +133,47 @@ const ServiceInquiryForm = () => {
                                     <option value="SME">SME</option>
                                     <option value="Enterprise">Enterprise</option>
                                     <option value="Non-Profit">Non-Profit</option>
+                                    <option value="Other">Other</option>
                                 </select>
+                                {formData.orgType === 'Other' && (
+                                    <input
+                                        type="text"
+                                        name="orgTypeOther"
+                                        placeholder="Please specify organization type"
+                                        value={formData.orgTypeOther}
+                                        onChange={handleChange}
+                                        required
+                                        className="mt-3 w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none animate-fadeIn"
+                                    />
+                                )}
                             </div>
                             <div>
                                 <label className="block text-sm font-bold text-slate-700 mb-1">How did you hear about us? <span className="text-red-500">*</span></label>
-                                <select className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
-                                    <option>- Select -</option>
-                                    <option>Social Media</option>
-                                    <option>Google Search</option>
-                                    <option>Referral</option>
-                                    <option>Other</option>
+                                <select
+                                    name="howDidYouHear"
+                                    value={formData.howDidYouHear}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none"
+                                >
+                                    <option value="">- Select -</option>
+                                    <option value="Social Media">Social Media</option>
+                                    <option value="Google Search">Google Search</option>
+                                    <option value="Referral">Referral</option>
+                                    <option value="Other">Other</option>
                                 </select>
+                                {formData.howDidYouHear === 'Other' && (
+                                    <input
+                                        type="text"
+                                        name="howDidYouHearOther"
+                                        placeholder="Please specify"
+                                        value={formData.howDidYouHearOther}
+                                        onChange={handleChange}
+                                        required
+                                        className="mt-3 w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none animate-fadeIn"
+                                    />
+                                )}
+
                             </div>
                         </div>
 
@@ -193,7 +232,19 @@ const ServiceInquiryForm = () => {
                                     <option value="Cyber Security">Cyber Security</option>
                                     <option value="Staffing">Staffing</option>
                                     <option value="IT Support">IT Support</option>
+                                    <option value="Other">Other</option>
                                 </select>
+                                {formData.assistance === 'Other' && (
+                                    <input
+                                        type="text"
+                                        name="assistanceOther"
+                                        placeholder="Please specify assistance needed"
+                                        value={formData.assistanceOther}
+                                        onChange={handleChange}
+                                        required
+                                        className="mt-3 w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none animate-fadeIn"
+                                    />
+                                )}
                             </div>
                         </div>
 
@@ -212,8 +263,8 @@ const ServiceInquiryForm = () => {
                         </div>
                     </form>
                 </div>
-            </div>
-        </section>
+            </div >
+        </section >
     );
 };
 
