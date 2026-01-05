@@ -203,6 +203,7 @@ export const serviceDetails = {
         title: "Web Development",
         subtitle: "Captivating Websites that Drive Growth",
         description: "Your website is your digital storefront. We build stunning, responsive, and SEO-optimized websites that tell your brand story and convert visitors into loyal customers.",
+
         features: [
             "Corporate & Brand Website Development",
             "E-commerce Stores (Shopify, WooCommerce)",

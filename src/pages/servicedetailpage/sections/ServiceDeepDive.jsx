@@ -27,9 +27,13 @@ import {
     SiLinkedin, SiZoom, SiSlack, SiTrello, SiAsana, SiCanva, SiSalesforce,
     // New Additions
     SiGoogledocs, SiGrammarly, SiZapier,
-    SiAdobephotoshop, SiAdobeillustrator, SiAdobepremierepro
+    SiAdobephotoshop, SiAdobeillustrator, SiAdobepremierepro,
+    // E-commerce Additions
+    SiWoocommerce, SiMagento, SiStripe, SiPaypal,
+    // CMS & Other Additions
+    SiDrupal, SiStrapi, SiContentful, SiPhp, SiMoodle, SiVimeo
 } from 'react-icons/si';
-import { FaAws, FaJava, FaWindows } from 'react-icons/fa';
+import { FaAws, FaJava, FaWindows, FaBook } from 'react-icons/fa';
 import { VscAzure } from 'react-icons/vsc';
 import { RiTwitterXFill } from 'react-icons/ri';
 import { Video } from 'lucide-react'; // Import Video icon for fallbacks
@@ -58,6 +62,10 @@ const techMap = {
     "JavaScript": { icon: SiJavascript, color: "text-[#F7DF1E]" },
     "WordPress": { icon: SiWordpress, color: "text-[#21759B]" },
     "Shopify": { icon: SiShopify, color: "text-[#7AB55C]" },
+    "WooCommerce": { icon: SiWoocommerce, color: "text-[#96588A]" },
+    "Magento": { icon: SiMagento, color: "text-[#EE672F]" },
+    "Stripe": { icon: SiStripe, color: "text-[#008CDD]" },
+    "PayPal": { icon: SiPaypal, color: "text-[#003087]" },
 
     // Enterprise
     "SAP": { icon: SiSap, color: "text-[#0FAAFF]" },
@@ -191,7 +199,21 @@ const techMap = {
     "Hemingway App": { icon: SiGoogledocs, color: "text-[#000000]" },
     "Zapier": { icon: SiZapier, color: "text-[#FF4A00]" },
     "Make": { icon: SiZapier, color: "text-[#6F3BF5]" },
-    "ActiveCampaign": { icon: SiHubspot, color: "text-[#004CFF]" }
+    "ActiveCampaign": { icon: SiHubspot, color: "text-[#004CFF]" },
+
+    // CMS & LMS & Others
+    "Drupal": { icon: SiDrupal, color: "text-[#0678BE]" },
+    "Strapi": { icon: SiStrapi, color: "text-[#2F2E8F]" },
+    "Contentful": { icon: SiContentful, color: "text-[#247FBF]" },
+    "PHP": { icon: SiPhp, color: "text-[#777BB4]" },
+    "Moodle": { icon: SiMoodle, color: "text-[#F98012]" },
+    "LearnDash": { icon: FaBook, color: "text-[#1E1E1E]" }, // Generic LMS icon
+    "Vimeo API": { icon: SiVimeo, color: "text-[#1AB7EA]" },
+    "Playwright": { icon: Shield, color: "text-[#2EAD33]" }, // Using Shield as fallback
+    "TestRail": { icon: SiJira, color: "text-[#5D5D5D]" }, // Fallback
+    "RestAssured": { icon: SiPostman, color: "text-[#FF6C37]" }, // Fallback
+    "AWS CodePipeline": { icon: FaAws, color: "text-[#FF9900]" },
+    "AWS S3": { icon: FaAws, color: "text-[#FF9900]" }
 };
 
 const themes = {

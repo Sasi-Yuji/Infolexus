@@ -15,6 +15,32 @@ import { VscAzure } from 'react-icons/vsc';
 
 const categories = [
     {
+        title: "Artificial Intelligence",
+        desc: "Advanced machine learning and computer vision solutions.",
+        color: "from-violet-600 to-purple-600",
+        techs: [
+            { name: "TensorFlow", icon: SiTensorflow, color: "text-[#FF6F00]" },
+            { name: "Keras", icon: SiKeras, color: "text-[#D00000]" },
+            { name: "PyTorch", icon: SiPytorch, color: "text-[#EE4C2C]" },
+            { name: "OpenCV", icon: SiOpencv, color: "text-[#5C3EE8]" },
+            { name: "spaCy", icon: SiSpacy, color: "text-[#09A3D5]" },
+        ]
+    },
+    {
+        title: "Cloud",
+        desc: "Scalable cloud infrastructure.",
+        color: "from-blue-600 to-indigo-600",
+        techs: [
+            { name: "AWS", icon: FaAws, color: "text-[#FF9900]" },
+            { name: "Microsoft Azure", icon: VscAzure, color: "text-[#0078D4]" },
+            { name: "Google Cloud", icon: SiGooglecloud, color: "text-[#4285F4]" },
+            { name: "AWS CDK", icon: FaAws, color: "text-[#FF9900]" },
+            { name: "Terraform", icon: SiTerraform, color: "text-[#7B42BC]" },
+            { name: "Docker", icon: SiDocker, color: "text-[#2496ED]" },
+            { name: "Kubernetes", icon: SiKubernetes, color: "text-[#326CE5]" },
+        ]
+    },
+    {
         title: "Programming Language",
         desc: "Core languages powering our solutions.",
         color: "from-yellow-400 to-orange-500",
@@ -50,32 +76,6 @@ const categories = [
         ]
     },
     {
-        title: "Cloud",
-        desc: "Scalable cloud infrastructure.",
-        color: "from-blue-600 to-indigo-600",
-        techs: [
-            { name: "AWS", icon: FaAws, color: "text-[#FF9900]" },
-            { name: "Microsoft Azure", icon: VscAzure, color: "text-[#0078D4]" },
-            { name: "Google Cloud", icon: SiGooglecloud, color: "text-[#4285F4]" },
-            { name: "AWS CDK", icon: FaAws, color: "text-[#FF9900]" },
-            { name: "Terraform", icon: SiTerraform, color: "text-[#7B42BC]" },
-            { name: "Docker", icon: SiDocker, color: "text-[#2496ED]" },
-            { name: "Kubernetes", icon: SiKubernetes, color: "text-[#326CE5]" },
-        ]
-    },
-    {
-        title: "CI Tools",
-        desc: "Continuous integration and deployment.",
-        color: "from-orange-500 to-red-500",
-        techs: [
-            { name: "GitLab CI/CD", icon: SiGitlab, color: "text-[#FC6D26]" },
-            { name: "GitHub CI/CD", icon: SiGithub, color: "text-[#181717]" },
-            { name: "Jenkins", icon: SiJenkins, color: "text-[#D24939]" },
-            { name: "AWS CodeDeploy", icon: FaAws, color: "text-[#FF9900]" },
-            { name: "AWS CodePipeline", icon: FaAws, color: "text-[#FF9900]" },
-        ]
-    },
-    {
         title: "Database Management",
         desc: "Secure and scalable data storage solutions.",
         color: "from-slate-600 to-stone-600",
@@ -89,15 +89,15 @@ const categories = [
         ]
     },
     {
-        title: "Artificial Intelligence",
-        desc: "Advanced machine learning and computer vision solutions.",
-        color: "from-violet-600 to-purple-600",
+        title: "CI Tools",
+        desc: "Continuous integration and deployment.",
+        color: "from-orange-500 to-red-500",
         techs: [
-            { name: "TensorFlow", icon: SiTensorflow, color: "text-[#FF6F00]" },
-            { name: "Keras", icon: SiKeras, color: "text-[#D00000]" },
-            { name: "PyTorch", icon: SiPytorch, color: "text-[#EE4C2C]" },
-            { name: "OpenCV", icon: SiOpencv, color: "text-[#5C3EE8]" },
-            { name: "spaCy", icon: SiSpacy, color: "text-[#09A3D5]" },
+            { name: "GitLab CI/CD", icon: SiGitlab, color: "text-[#FC6D26]" },
+            { name: "GitHub CI/CD", icon: SiGithub, color: "text-[#181717]" },
+            { name: "Jenkins", icon: SiJenkins, color: "text-[#D24939]" },
+            { name: "AWS CodeDeploy", icon: FaAws, color: "text-[#FF9900]" },
+            { name: "AWS CodePipeline", icon: FaAws, color: "text-[#FF9900]" },
         ]
     },
     {

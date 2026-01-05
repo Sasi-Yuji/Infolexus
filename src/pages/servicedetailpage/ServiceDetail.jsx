@@ -40,6 +40,23 @@ const ServiceDetail = () => {
                     <ServiceDeepDive service={service} />
                     <ServiceFeatures service={service} />
                     <ServiceRoadmap service={service} />
+
+                    {/* Render Sub-Services if they exist */}
+                    {service.subServices && service.subServices.map((subId, index) => {
+                        const subService = serviceDetails[subId];
+                        if (!subService) return null;
+
+                        return (
+                            <div key={subId} className="mt-32 pt-16 border-t border-slate-200">
+                                <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 mb-12 text-center">
+                                    {subService.title}
+                                </h2>
+                                <ServiceDeepDive service={subService} />
+                                <ServiceFeatures service={subService} />
+                                <ServiceRoadmap service={subService} />
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             <ServiceCTA />

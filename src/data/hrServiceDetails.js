@@ -10,98 +10,98 @@ import requirementsImg from '../assets/hrservice/requirements and talent.jpeg';
 import trainingImg from '../assets/hrservice/traning and skills.jpeg';
 
 export const hrServiceDetails = {
-    // 1. Job Seeker Assistance
+    // 4. End-to-End Placement Assistance (100% Support)
     'job-seeker': {
-        title: "Job Seeker Assistance",
-        subtitle: "Connecting Talent with the Right Career Opportunities",
-        description: "At Infolexus, we provide comprehensive job placement services to support job seekers in finding roles that match their skills and aspirations. Our team specializes in both IT and Non-IT recruitment, working closely with candidates to identify their strengths. From initial screening to final placement, we offer dedicated employment assistance and guide you through the entire process to ensure you secure meaningful and long-term career opportunities.",
+        title: "End-to-End Placement Assistance (100% Support)",
+        subtitle: "100% Support Ecosystem from Inception to Offer",
+        description: "We provide complete end-to-end placement support, including career guidance, ATS-friendly resume optimization, interview preparation, job referrals, and interview coordination. Our team actively supports candidates until they secure a job in IT or Non-IT roles, ensuring continuous assistance throughout the entire placement journey.",
         image: jobSeekersImg,
-        benefits: ["Personalized Job Matching", "Resume Guidance", "Interview Support"],
+        benefits: ["Full-Lifecycle Support", "Resume-to-Offer Guidance", "Continuous Engagement"],
         features: [
-            "Comprehensive Job Placement",
-            "IT & Non-IT Recruitment",
-            "Skill & Aspiration Matching",
-            "Initial Screening Support",
-            "Final Placement Guidance",
-            "Long-term Career Support"
+            "Full-Lifecycle Support",
+            "Resume-to-Offer Guidance",
+            "Continuous Candidate Engagement",
+            "Post-Interview Analysis",
+            "Negotiation Assistance",
+            "360-Degree Mentorship"
         ],
         process: [
-            { title: "Identify", desc: "Understanding candidate strengths." },
-            { title: "Match", desc: "Finding suitable roles." },
-            { title: "Guide", desc: "Assistance through the process." },
-            { title: "Place", desc: "Securing the career opportunity." }
+            { title: "Assess", desc: "Initial capability calibration." },
+            { title: "Optimize", desc: "Profile and skill enhancement." },
+            { title: "Connect", desc: "Strategic interview alignment." },
+            { title: "Secure", desc: "Finalizing employment offers." }
         ],
         technologies: ["LinkedIn", "Zoom", "Microsoft Teams"]
     },
 
-    // 2. Resume & Profile Optimisation
+    // 2. Fresher & Experienced Placement Support
     'resume-optimization': {
-        title: "Resume & Profile Optimisation",
-        subtitle: "Crafting Professional Profiles that Stand Out",
-        description: "We help candidates build a strong personal brand with our professional resume writing and LinkedIn profile makeover services. Our team creates ATS-friendly resumes that meet industry standards, ensuring your profile passes automated filters. By optimizing your CV for specific job roles and utilizing strategic keywords, we significantly improve your visibility and increase your chances of getting shortlisted by top recruiters.",
+        title: "For Fresher & Experienced Placement Support",
+        subtitle: "Tailored Pathways for Freshers and Experienced Professionals",
+        description: "We offer tailored placement support for both freshers beginning their careers and experienced professionals seeking new or better opportunities. Our guidance, resume optimization, and interview preparation are customized based on individual experience levels, ensuring each candidate is positioned correctly for relevant roles and hiring expectations.",
         image: requirementsImg, // talent/requirements
-        benefits: ["ATS Compliance", "Professional Branding", "Increased Visibility"],
+        benefits: ["Experience-Level Customization", "Competency Mapping", "Role-Specific Strategies"],
         features: [
-            "Professional Resume Writing",
-            "LinkedIn Profile Makeover",
-            "ATS-Friendly Formats",
-            "Keyword Strategy",
-            "Role-Specific Optimization",
-            "Personal Branding"
+            "Experience-Level Customization",
+            "Competency Mapping",
+            "Role-Specific Resume Architecture",
+            "Seniority-Based Interview Prep",
+            "Fresher Career Launchpads",
+            "Lateral Growth Strategies"
         ],
         process: [
-            { title: "Review", desc: "Analyzing current profile." },
-            { title: "Strategize", desc: "Selecting keywords and format." },
-            { title: "Draft", desc: "Creating professional content." },
-            { title: "Optimize", desc: "Refining for ATS and recruiters." }
+            { title: "Segregate", desc: "Identifying experience level." },
+            { title: "Calibrate", desc: "Aligning strategy with seniority." },
+            { title: "Prepare", desc: "Targeted interview coaching." },
+            { title: "Position", desc: "Matching with relevant roles." }
         ],
         technologies: ["LinkedIn", "Canva", "Office 365"]
     },
 
-    // 3. Interview Preparation & Coaching
+    // 3. Placement-Focused Approach
     'interview-prep': {
-        title: "Interview Preparation & Coaching",
-        subtitle: "Build Confidence and Master the Interview Process",
-        description: "Our interview coaching equips job seekers with the confidence needed to succeed. We provide rigorous mock interview practice and personalized feedback on how to handle technical and behavioral interview questions. Additionally, our soft skills training focuses on improving your communication and presentation, ensuring you are fully prepared to perform effectively in any real-world interview scenario.",
+        title: "Placement-Focused Approach",
+        subtitle: "Aligning Preparation with Real-World Hiring Outcomes",
+        description: "Our services are designed with a single objective — successful placement. Every step, from career guidance and resume building to interview preparation, is aligned with real-world hiring requirements. We focus on practical outcomes rather than theory, ensuring candidates are fully prepared for actual interview scenarios and job roles.",
         image: trainingImg, // training
-        benefits: ["Confidence Building", "Mock Sessions", "Expert Feedback"],
+        benefits: ["Outcome-Based Prep", "Real-World Scenarios", "Zero-Theory Approach"],
         features: [
-            "Mock Interview Practice",
-            "Personalized Feedback",
-            "Technical Q&A Prep",
-            "Behavioral Coaching",
-            "Soft Skills Training",
-            "Presentation Skills"
+            "Outcome-Based Preparation",
+            "Real-World Scenario Simulations",
+            "Hiring Requirement Alignment",
+            "Practical Skill Application",
+            "Interview Lifecycle Optimization",
+            "Deployment-Ready Training"
         ],
         process: [
-            { title: "Assess", desc: "Evaluating readiness." },
-            { title: "Coach", desc: "Mock interviews and training." },
-            { title: "Feedback", desc: "Detailed improvement points." },
-            { title: "Refine", desc: "Polishing interview techniques." }
+            { title: "Audit", desc: "Analyzing current readiness." },
+            { title: "Simulate", desc: "Real-world mock scenarios." },
+            { title: "Refine", desc: "Feedback-driven improvement." },
+            { title: "Validate", desc: "Confirming interview readiness." }
         ],
         technologies: ["Zoom", "Microsoft Teams", "Slack"]
     },
 
-    // 4. Career Guidance & Counselling
+    // 1. For Career Gap Candidates
     'career-guidance': {
-        title: "Career Guidance & Counselling",
-        subtitle: "Strategic Planning for Your Professional Journey",
-        description: "We offer expert career counselling services for students, freshers, and experienced professionals. Our advisors assist with career path planning and conduct a detailed skill gap analysis to identify areas for improvement. Whether you need job transition support or are looking to advance in your current field, we provide the clear, strategic guidance necessary to make informed professional decisions.",
+        title: "For Career Gap Candidates",
+        subtitle: "Transforming Career Breaks into Professional Advantages",
+        description: "We specialize in supporting candidates with career gaps, helping them confidently restart their careers in IT and Non-IT domains. Our process focuses on understanding the reason for the gap, rebuilding professional profiles, preparing candidates to address the gap effectively during interviews, and aligning them with suitable job opportunities. Career gaps are not treated as limitations but are handled strategically to improve employability. We help with resume optimization, interview preparation, job referrals, and interview coordination. Our team actively supports candidates until they secure a job in IT or Non-IT roles, ensuring continuous assistance throughout the entire placement journey.",
         image: consultImg, // consulting
-        benefits: ["Clear Career Path", "Skill Gap Analysis", "Expert Advice"],
+        benefits: ["Gap Analysis", "Profile Reconstruction", "Strategic Positioning"],
         features: [
-            "Expert Career Counselling",
-            "Career Path Planning",
-            "Skill Gap Analysis",
-            "Job Transition Support",
-            "Growth Strategy",
-            "Professional Decision Support"
+            "Root Cause Gap Analysis",
+            "Professional Profile Reconstruction",
+            "Strategic Interview Positioning",
+            "Employability Enhancement",
+            "Gap-to-Job Transition",
+            "Continuous Placement Support"
         ],
         process: [
-            { title: "Analyze", desc: "Skill and goal assessment." },
-            { title: "Plan", desc: "Mapping the career path." },
-            { title: "Advise", desc: "Strategic guidance sessions." },
-            { title: "Support", desc: "Ongoing mentorship." }
+            { title: "Analyze", desc: "Root cause evaluation." },
+            { title: "Rebuild", desc: "Professional narrative reconstruction." },
+            { title: "Align", desc: "Mapping to market demands." },
+            { title: "Launch", desc: "Restarting the career trajectory." }
         ],
         technologies: ["LinkedIn", "Zoom", "Trello"]
     },

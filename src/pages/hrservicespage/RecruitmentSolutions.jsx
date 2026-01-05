@@ -5,6 +5,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { hrServiceDetails } from '../../data/hrServiceDetails';
 
 import recruitmentHeroBg from '../../assets/recruitment_hero_bg.png';
+import ClientMarquee from '../../components/ui/ClientMarquee';
 
 const RecruitmentSolutions = () => {
     const location = useLocation();
@@ -77,82 +78,113 @@ const RecruitmentSolutions = () => {
                     if (!data) return null;
 
                     return (
-                        <div id={key} key={key} className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
+                        <div id={key} key={key} className="flex flex-col gap-10 mb-32 last:mb-0">
 
-                            {/* Text Content */}
+                            {/* Centered Heading Section */}
                             <motion.div
-                                initial={{ opacity: 0, x: isEven ? -100 : 100 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                                className="flex-1 space-y-6"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="text-center max-w-4xl mx-auto space-y-4 px-4"
                             >
-                                <div className="flex items-center gap-3 mb-2">
+                                <div className="flex items-center justify-center gap-3 mb-2">
                                     <span className="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wider">
                                         Solution {index + 1}
                                     </span>
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
+                                <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight">
                                     {data.title}
                                 </h2>
-                                <p className="text-xl text-slate-500 font-light">
+                                <p className="text-xl md:text-2xl text-slate-500 font-light max-w-2xl mx-auto">
                                     {data.subtitle}
                                 </p>
-                                <p className="text-lg text-slate-600 leading-relaxed">
-                                    {data.description}
-                                </p>
+                            </motion.div>
 
-                                <ul className="space-y-3 pt-2">
-                                    {data.features && data.features.slice(0, 5).map((feature, idx) => (
-                                        <li key={idx} className="flex items-start gap-3">
-                                            <div className="mt-1 w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-700 flex items-center justify-center shrink-0">
-                                                <Check size={12} strokeWidth={3} />
+                            {/* Zig-Zag Content Section */}
+                            <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
+
+                                {/* Text Content (Description & Actions) */}
+                                <motion.div
+                                    initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    className="flex-1 space-y-8 text-left"
+                                >
+                                    <p className="text-lg text-slate-600 leading-relaxed">
+                                        {data.description}
+                                    </p>
+
+                                    <ul className="space-y-4 pt-2">
+                                        {data.features && data.features.slice(0, 5).map((feature, idx) => (
+                                            <li key={idx} className="flex items-start gap-3">
+                                                <div className="mt-1 w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-700 flex items-center justify-center shrink-0 shadow-sm">
+                                                    <Check size={14} strokeWidth={3} />
+                                                </div>
+                                                <span className="text-slate-700 font-medium text-lg">{feature}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    <div className="pt-6">
+                                        <Link
+                                            to="/contact"
+                                            className="inline-flex items-center gap-3 text-white bg-indigo-600 px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-500/30 group"
+                                        >
+                                            Inquire Now
+                                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                        </Link>
+                                    </div>
+                                </motion.div>
+
+                                {/* Image Content */}
+                                <motion.div
+                                    initial={{ opacity: 0, x: isEven ? 50 : -50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    className="flex-1 relative w-full"
+                                >
+                                    {/* White Card Container */}
+                                    <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl relative rotate-1 hover:rotate-0 transition-transform duration-500 ease-out">
+                                        <div className="relative rounded-[2rem] overflow-hidden h-[300px] md:h-[380px] w-full group">
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
+                                            {data.image ? (
+                                                <img
+                                                    src={data.image}
+                                                    alt={data.title}
+                                                    className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-slate-200 flex items-center justify-center">
+                                                    <span className="text-slate-400">No Image Available</span>
+                                                </div>
+                                            )}
+
+                                            {/* Floating Badge */}
+                                            <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 bg-white px-5 py-3 rounded-2xl shadow-xl z-20">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <div className="text-green-500">
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                                            <polyline points="17 6 23 6 23 12"></polyline>
+                                                        </svg>
+                                                    </div>
+                                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">IMPACT</span>
+                                                </div>
+                                                <p className="text-slate-900 font-bold text-base md:text-lg leading-tight">Business Growth</p>
                                             </div>
-                                            <span className="text-slate-700 font-medium">{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <div className="pt-4">
-                                    <Link
-                                        to="/contact"
-                                        className="inline-flex items-center gap-2 text-indigo-600 font-bold hover:text-indigo-800 transition-colors group"
-                                    >
-                                        Inquire Now
-                                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                                    </Link>
-                                </div>
-                            </motion.div>
-
-                            {/* Image Content */}
-                            <motion.div
-                                initial={{ opacity: 0, x: isEven ? 100 : -100 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                                className="flex-1 relative w-full"
-                            >
-                                <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-[400px]">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                                    {data.image ? (
-                                        <img
-                                            src={data.image}
-                                            alt={data.title}
-                                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-slate-200 flex items-center justify-center">
-                                            <span className="text-slate-400">No Image Available</span>
                                         </div>
-                                    )}
-                                    {/* Decorative Elements */}
-                                    <div className={`absolute -z-10 w-full h-full border-2 border-dashed border-indigo-200 rounded-2xl top-4 ${isEven ? 'left-4' : 'right-4'}`} />
-                                </div>
-                            </motion.div>
+                                    </div>
+                                </motion.div>
+                            </div>
                         </div>
                     );
                 })}
             </div>
+
+            {/* CLIENT MARQUEE SECTION */}
+            <ClientMarquee />
 
             {/* CTA SECTION */}
             <div className="bg-[#081A4A] py-20 relative overflow-hidden">

@@ -32,11 +32,14 @@ const PageLoader = () => (
   </div>
 );
 
+import ScrollToTop from './components/layout/ScrollToTop';
+
 function App() {
   const [showIntro, setShowIntro] = useState(true);
 
   return (
     <Router>
+      <ScrollToTop />
       <AnimatePresence mode="wait">
         {showIntro && (
           <Walkthrough key="walkthrough" onComplete={() => setShowIntro(false)} />

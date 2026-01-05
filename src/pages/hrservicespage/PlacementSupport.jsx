@@ -1,39 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Check, ArrowRight, Briefcase, Building2, UserCheck } from 'lucide-react';
+import { Check, ArrowRight } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import { hrServiceDetails } from '../../data/hrServiceDetails';
-import UpskillingRegistrationModal from '../trainingspage/components/UpskillingRegistrationModal';
 
-import accentureImg from '../../assets/company/Accenture.png';
-import ardhasImg from '../../assets/company/Ardhas.jpg';
-import hclImg from '../../assets/company/HCL.png';
-import appInnovationImg from '../../assets/company/app-innovation.jpeg';
-import hexawareImg from '../../assets/company/Hexaware.png';
-import wiproImg from '../../assets/company/Wipro.png';
-import cognizantImg from '../../assets/company/cognizant.jpeg';
-import infosysImg from '../../assets/company/infosys.jpeg';
-import zohoImg from '../../assets/company/zoho.jpeg';
-import integraImg from '../../assets/company/Integra.jpg';
-import omegaImg from '../../assets/company/Omega logo.jpg';
-import placementHeroImg from '../../assets/placement_hero.png';
+import placementHeroBg from '../../assets/placement_hero.png';
+import ClientMarquee from '../../components/ui/ClientMarquee';
 
 const PlacementSupport = () => {
     const location = useLocation();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedService, setSelectedService] = useState("");
-
-    const openModal = (serviceName) => {
-        setSelectedService(serviceName);
-        setIsModalOpen(true);
-    };
 
     // Keys for Placement Support Services
     const serviceKeys = [
-        'career-guidance',
+        'job-seeker',
         'resume-optimization',
         'interview-prep',
-        'job-seeker'
+        'career-guidance'
     ];
 
     useEffect(() => {
@@ -60,12 +42,12 @@ const PlacementSupport = () => {
             <div className="relative bg-[#081A4A] py-32 lg:py-48 overflow-hidden">
                 <div className="absolute inset-0">
                     <img
-                        src={placementHeroImg}
-                        alt="Placement Support Hero"
-                        className="absolute inset-0 w-full h-full object-cover opacity-80"
+                        src={placementHeroBg}
+                        alt="Placement Support"
+                        className="w-full h-full object-cover opacity-80"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#081A4A]/90 via-transparent to-[#081A4A]/80" />
-                    <div className="absolute inset-0 bg-[#081A4A]/40 mix-blend-multiply" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-950/80 to-slate-950/80 mix-blend-multiply" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#081A4A] via-transparent to-transparent" />
                 </div>
 
                 <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
@@ -74,80 +56,21 @@ const PlacementSupport = () => {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-6"
                     >
-                        Placement <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Support</span>
+                        Placement <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-indigo-500">Support</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-12"
+                        className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
                     >
-                        Comprehensive guidance and preparation for job seekers and fresh graduates.
+                        Comprehensive career guidance and placement assistance to launch your professional journey.
                     </motion.p>
                 </div>
             </div>
 
-            {/* WHY INFOLEXUS SECTION (Previously Floating Stats) */}
-            <div className="py-20 bg-white relative">
-                <div className="container mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
-
-                        {/* Left Side: Title */}
-                        <div className="w-full lg:w-1/3 text-center lg:text-left mb-10 lg:mb-0">
-                            <motion.div
-                                initial={{ opacity: 0, x: -50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
-                                    Why <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">InfoLexus?</span>
-                                </h2>
-                                <div className="h-2 w-24 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full mt-6 mx-auto lg:mx-0" />
-                                <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-                                    We combine years of industry expertise with a vast network of top-tier partners to launch your career.
-                                </p>
-                            </motion.div>
-                        </div>
-
-                        {/* Right Side: Stats Cards */}
-                        <div className="w-full lg:w-2/3">
-                            <motion.div
-                                initial={{ opacity: 0, x: 50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8 }}
-                                className="grid grid-cols-1 md:grid-cols-3 gap-6"
-                            >
-                                {[
-                                    { icon: Briefcase, count: "7+", label: "Years of Experience" },
-                                    { icon: Building2, count: "2,000+", label: "Corporate Partners" },
-                                    { icon: UserCheck, count: "3,000+", label: "Candidates Placed" }
-                                ].map((stat, idx) => (
-                                    <div key={idx} className="relative group bg-gradient-to-b from-slate-800 to-slate-950 rounded-2xl p-8 shadow-2xl border border-slate-700/30 overflow-hidden text-center hover:-translate-y-2 transition-all duration-500">
-                                        {/* Ambient Glow */}
-                                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-cyan-500/5 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                                        {/* Top Highlight Line */}
-                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50 group-hover:w-2/3 group-hover:opacity-100 transition-all duration-500" />
-
-                                        <div className="relative z-10 flex flex-col items-center">
-                                            <div className="mb-4 p-3 rounded-2xl bg-slate-900/50 ring-1 ring-slate-700/50 group-hover:ring-cyan-500/30 group-hover:scale-110 transition-all duration-300 text-cyan-400 shadow-inner">
-                                                <stat.icon size={32} strokeWidth={1.5} />
-                                            </div>
-                                            <h3 className="lg:text-4xl text-3xl font-bold text-white mb-2 tracking-tight drop-shadow-md">{stat.count}</h3>
-                                            <p className="text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em] group-hover:text-cyan-200/70 transition-colors">{stat.label}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {/* ZIG-ZAG CONTENT SECTION */}
-            <div className="pb-24 pt-32 space-y-24 md:space-y-32 container mx-auto px-4 md:px-6">
+            <div className="py-24 space-y-24 md:space-y-32 container mx-auto px-4 md:px-6">
                 {serviceKeys.map((key, index) => {
                     const data = hrServiceDetails[key];
                     const isEven = index % 2 === 0;
@@ -155,118 +78,129 @@ const PlacementSupport = () => {
                     if (!data) return null;
 
                     return (
-                        <div id={key} key={key} className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
+                        <div id={key} key={key} className="flex flex-col gap-10 mb-32 last:mb-0">
 
-                            {/* Text Content */}
+                            {/* Centered Heading Section */}
                             <motion.div
-                                initial={{ opacity: 0, x: isEven ? -100 : 100 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                                className="flex-1 space-y-6"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="text-center max-w-4xl mx-auto space-y-4 px-4"
                             >
-                                <div className="flex items-center gap-3 mb-2">
-                                    <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider">
-                                        Step {index + 1}
+                                <div className="flex items-center justify-center gap-3 mb-2">
+                                    <span className="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wider">
+                                        Support {index + 1}
                                     </span>
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
+                                <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight">
                                     {data.title}
                                 </h2>
-                                <p className="text-xl text-slate-500 font-light">
+                                <p className="text-xl md:text-2xl text-slate-500 font-light max-w-2xl mx-auto">
                                     {data.subtitle}
                                 </p>
-                                <p className="text-lg text-slate-600 leading-relaxed">
-                                    {data.description}
-                                </p>
+                            </motion.div>
 
-                                <ul className="space-y-3 pt-2">
-                                    {data.features && data.features.slice(0, 5).map((feature, idx) => ( // Show first 5 features
-                                        <li key={idx} className="flex items-start gap-3">
-                                            <div className="mt-1 w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-700 flex items-center justify-center shrink-0">
-                                                <Check size={12} strokeWidth={3} />
+                            {/* Zig-Zag Content Section */}
+                            <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
+
+                                {/* Text Content (Description & Actions) */}
+                                <motion.div
+                                    initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    className="flex-1 space-y-8 text-left"
+                                >
+                                    <p className="text-lg text-slate-600 leading-relaxed">
+                                        {data.description}
+                                    </p>
+
+                                    <ul className="space-y-4 pt-2">
+                                        {data.features && data.features.slice(0, 5).map((feature, idx) => (
+                                            <li key={idx} className="flex items-start gap-3">
+                                                <div className="mt-1 w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-700 flex items-center justify-center shrink-0 shadow-sm">
+                                                    <Check size={14} strokeWidth={3} />
+                                                </div>
+                                                <span className="text-slate-700 font-medium text-lg">{feature}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    <div className="pt-6">
+                                        <Link
+                                            to="/contact"
+                                            className="inline-flex items-center gap-3 text-white bg-indigo-600 px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-500/30 group"
+                                        >
+                                            Inquire Now
+                                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                        </Link>
+                                    </div>
+                                </motion.div>
+
+                                {/* Image Content */}
+                                <motion.div
+                                    initial={{ opacity: 0, x: isEven ? 50 : -50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    className="flex-1 relative w-full"
+                                >
+                                    {/* White Card Container */}
+                                    <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl relative rotate-1 hover:rotate-0 transition-transform duration-500 ease-out">
+                                        <div className="relative rounded-[2rem] overflow-hidden h-[300px] md:h-[380px] w-full group">
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
+                                            {data.image ? (
+                                                <img
+                                                    src={data.image}
+                                                    alt={data.title}
+                                                    className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-slate-200 flex items-center justify-center">
+                                                    <span className="text-slate-400">No Image Available</span>
+                                                </div>
+                                            )}
+
+                                            {/* Floating Badge */}
+                                            <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 bg-white px-5 py-3 rounded-2xl shadow-xl z-20">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <div className="text-green-500">
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                                            <polyline points="17 6 23 6 23 12"></polyline>
+                                                        </svg>
+                                                    </div>
+                                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">IMPACT</span>
+                                                </div>
+                                                <p className="text-slate-900 font-bold text-base md:text-lg leading-tight">Career Accelerated</p>
                                             </div>
-                                            <span className="text-slate-700 font-medium">{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <div className="pt-4">
-                                    <button
-                                        onClick={() => openModal(data.title)}
-                                        className="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-800 transition-colors group"
-                                    >
-                                        Get Started
-                                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                                    </button>
-                                </div>
-                            </motion.div>
-
-                            {/* Image Content */}
-                            <motion.div
-                                initial={{ opacity: 0, x: isEven ? 100 : -100 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                                className="flex-1 relative w-full"
-                            >
-                                <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-[400px]">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                                    {data.image ? (
-                                        <img
-                                            src={data.image}
-                                            alt={data.title}
-                                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-slate-200 flex items-center justify-center">
-                                            <span className="text-slate-400">No Image Available</span>
                                         </div>
-                                    )}
-                                    {/* Decorative Elements */}
-                                    <div className={`absolute -z-10 w-full h-full border-2 border-dashed border-slate-300 rounded-2xl top-4 ${isEven ? 'left-4' : 'right-4'}`} />
-                                </div>
-                            </motion.div>
+                                    </div>
+                                </motion.div>
+                            </div>
                         </div>
                     );
                 })}
             </div>
 
-            {/* PLACEMENT PARTNERS MARQUEE */}
-            <div className="py-24 bg-white overflow-hidden border-t border-slate-100">
-                <div className="container mx-auto px-4 mb-16 text-center">
-                    <h2 className="text-3xl font-bold text-slate-900 mb-4">Our Candidates Have Got Placed In The Following Companies</h2>
-                    <div className="w-24 h-1 bg-cyan-500 mx-auto rounded-full"></div>
-                </div>
+            {/* CLIENT MARQUEE SECTION */}
+            <ClientMarquee />
 
-                <div className="relative w-full overflow-hidden">
-                    <motion.div
-                        className="flex items-center gap-16 whitespace-nowrap w-max"
-                        animate={{ x: "-50%" }}
-                        transition={{
-                            repeat: Infinity,
-                            ease: "linear",
-                            duration: 40,
-                        }}
+            {/* CTA SECTION */}
+            <div className="bg-[#081A4A] py-20 relative overflow-hidden">
+                <div className="container mx-auto px-4 text-center relative z-10">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Kickstart Your Career</h2>
+                    <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-10">
+                        Join our placement program and find the perfect role for your skills.
+                    </p>
+                    <Link
+                        to="/contact"
+                        className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-indigo-600 text-white font-bold rounded-full shadow-lg hover:shadow-indigo-500/50 hover:scale-105 transition-all"
                     >
-                        {[accentureImg, ardhasImg, hclImg, appInnovationImg, hexawareImg, wiproImg, cognizantImg, infosysImg, zohoImg, integraImg, omegaImg, accentureImg, ardhasImg, hclImg, appInnovationImg, hexawareImg, wiproImg, cognizantImg, infosysImg, zohoImg, integraImg, omegaImg].map((logo, index) => (
-                            <div key={index} className="w-48 h-32 flex-shrink-0 bg-white border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center p-2 hover:-translate-y-1 duration-300">
-                                <img
-                                    src={logo}
-                                    alt="Company Logo"
-                                    className="w-full h-full object-contain"
-                                />
-                            </div>
-                        ))}
-                    </motion.div>
+                        Get Placed Today
+                    </Link>
                 </div>
             </div>
-
-            <UpskillingRegistrationModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                initialCourse={selectedService}
-            />
         </div>
     );
 };

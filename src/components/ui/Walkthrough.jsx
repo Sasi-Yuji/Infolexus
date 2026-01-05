@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import walkthroughVideo from '../../assets/infolexus_walkthrough.mp4';
+import walkthroughVideo from '../../assets/video4.mp4';
 
 const Walkthrough = ({ onComplete }) => {
     const videoRef = useRef(null);
@@ -32,23 +32,23 @@ const Walkthrough = ({ onComplete }) => {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
-            className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[] flex items-center justify-center overflow-hidden bg-[#030B25]"
         >
-            <div className="relative w-[90%] max-w-5xl aspect-video overflow-hidden">
-                {/* Video Container to maintain aspect ratio or cover */}
+            {/* Main Video Container */}
+            <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-4">
                 <video
                     ref={videoRef}
-                    className="w-full h-full object-cover"
+                    className="w-full max-w-4xl object-contain outline-none border-none"
                     src={walkthroughVideo}
                     muted
                     playsInline
                     autoPlay
                 />
 
-                {/* Optional: clear Skip button if the user wants to bypass */}
+                {/* Skip button */}
                 <button
                     onClick={onComplete}
-                    className="absolute bottom-6 right-6 text-white/70 hover:text-white text-xs md:text-sm uppercase tracking-widest border border-white/20 px-4 py-1.5 md:px-6 md:py-2 rounded-full hover:bg-white/10 transition-all backdrop-blur-sm"
+                    className="absolute bottom-8 right-8 z-20 text-white/50 hover:text-white text-xs md:text-sm uppercase tracking-widest px-5 py-2 hover:bg-white/5 transition-all rounded-full"
                 >
                     Skip Intro
                 </button>

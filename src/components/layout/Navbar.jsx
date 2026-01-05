@@ -39,11 +39,12 @@ const Navbar = () => {
         };
     }, []);
 
-    // Close menus on route change
+    // Close menus and Scroll to Top on route change
     useEffect(() => {
         setActiveDropdown(null);
         setMobileSubMenuOpen(false);
         setIsOpen(false);
+        window.scrollTo(0, 0);
     }, [location]);
 
     // Prevent Background Scroll when Mobile Menu is Open
@@ -223,10 +224,10 @@ const Navbar = () => {
                     name: "Placement Support",
                     description: "Comprehensive guidance and preparation for job seekers and fresh graduates.",
                     items: [
-                        { name: 'Career Guidance', icon: RiArrowRightUpLine, path: '/hr-services/placement-support#career-guidance', desc: 'Expert counseling to chart your professional path.' },
-                        { name: 'Resume Optimization', icon: RiArticleFill, path: '/hr-services/placement-support#resume-optimization', desc: 'Crafting ATS-friendly resumes that stand out.' },
-                        { name: 'Interview Preparation', icon: RiChatSmileFill, path: '/hr-services/placement-support#interview-prep', desc: 'Mock interviews and tips to crack the toughest rounds.' },
-                        { name: 'Job Search Assistance', icon: RiUserSearchFill, path: '/hr-services/placement-support#job-seeker', desc: 'Connecting you with the right opportunities globally.' }
+                        { name: 'For Career Gap Candidates', icon: RiArrowRightUpLine, path: '/hr-services/placement-support#career-guidance', desc: 'Transforming Career Breaks into Professional Advantages' },
+                        { name: 'For Fresher & Experienced Placement Support', icon: RiArticleFill, path: '/hr-services/placement-support#resume-optimization', desc: 'Tailored Pathways for Freshers and Experienced Professionals' },
+                        { name: 'Placement-Focused Approach', icon: RiChatSmileFill, path: '/hr-services/placement-support#interview-prep', desc: 'Aligning Preparation with Real-World Hiring Outcomes' },
+                        { name: 'End-to-End Placement Assistance (100% Support)', icon: RiUserSearchFill, path: '/hr-services/placement-support#job-seeker', desc: '100% Support Ecosystem from Inception to Offer' }
                     ]
                 },
                 {
@@ -282,6 +283,19 @@ const Navbar = () => {
 
     return (
         <>
+            {/* Desktop Menu Backdrop - Blurs background when Mega Menu is open */}
+            <AnimatePresence>
+                {activeDropdown === 'OUR SERVICES' && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 hidden lg:block"
+                    />
+                )}
+            </AnimatePresence>
+
             <nav
                 style={
                     (scrolled || activeDropdown)
@@ -316,8 +330,8 @@ const Navbar = () => {
                                     <span
                                         onClick={() => handleMouseEnter(link.name)}
                                         className={cn(
-                                            "flex items-center gap-1 text-[13px] lg:text-sm font-bold tracking-widest uppercase transition-colors duration-300 text-white hover:text-cyan-400 cursor-pointer",
-                                            (activeDropdown === link.name) && "text-cyan-400"
+                                            "flex items-center gap-1 text-[13px] lg:text-sm font-bold tracking-widest uppercase transition-colors duration-300 text-white hover:text-blue-400 cursor-pointer",
+                                            (activeDropdown === link.name) && "text-blue-400"
                                         )}
                                     >
                                         {link.name}
@@ -327,8 +341,8 @@ const Navbar = () => {
                                     <Link
                                         to={link.path}
                                         className={cn(
-                                            "flex items-center gap-1 text-[13px] lg:text-sm font-bold tracking-widest uppercase transition-colors duration-300 text-white hover:text-cyan-400",
-                                            (location.pathname === link.path) && "text-cyan-400"
+                                            "flex items-center gap-1 text-[13px] lg:text-sm font-bold tracking-widest uppercase transition-colors duration-300 text-white hover:text-blue-400",
+                                            (location.pathname === link.path) && "text-blue-400"
                                         )}
                                     >
                                         {link.name}
@@ -345,97 +359,103 @@ const Navbar = () => {
                                         onMouseLeave={handleMouseLeave}
                                     >
                                         <div className={cn(
-                                            "w-[95%] max-w-6xl bg-[#081A4A]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col min-h-[500px] transition-all duration-300 origin-top transform",
+                                            "w-[95%] max-w-6xl bg-white backdrop-blur-xl border border-slate-100 rounded-2xl shadow-2xl overflow-hidden flex flex-col min-h-[500px] transition-all duration-300 origin-top transform",
                                             activeDropdown === link.name
                                                 ? "opacity-100 rotate-x-0 translate-y-0"
                                                 : "opacity-0 -rotate-x-12 translate-y-4"
                                         )}>
-                                            {/* 1. TOP TABS ROW */}
+                                            {/* 1. TOP TABS ROW - Exact Match Layout */}
                                             <div className="w-full bg-white border-b border-gray-100 flex flex-row">
-                                                {serviceCategories.map((cat, idx) => (
-                                                    <button
-                                                        key={idx}
-                                                        onMouseEnter={() => {
-                                                            setActiveServiceCategory(idx);
-                                                            setActiveSubService(0);
-                                                        }}
-                                                        className={cn(
-                                                            "flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-300 relative group/btn",
-                                                            activeServiceCategory === idx
-                                                                ? "bg-[#081A4A] text-white"
-                                                                : "text-slate-600 hover:text-white hover:bg-[#081A4A]"
-                                                        )}
-                                                    >
-                                                        {activeServiceCategory === idx && (
-                                                            <motion.div
-                                                                layoutId="activeTab"
-                                                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-400"
-                                                            />
-                                                        )}
-                                                        <span className="relative z-10">{cat.title}</span>
-                                                    </button>
-                                                ))}
+                                                {/* Left: Active Category Header (Matches Sidebar) */}
+                                                <div className="w-[300px] bg-[#081A4A] text-white flex items-center justify-center text-[15px] font-bold tracking-wider shrink-0">
+                                                    {serviceCategories[activeServiceCategory].title}
+                                                </div>
+
+                                                {/* Right: Tabs List */}
+                                                <div className="flex-1 flex flex-row px-4">
+                                                    {serviceCategories.map((cat, idx) => (
+                                                        <button
+                                                            key={idx}
+                                                            onMouseEnter={() => {
+                                                                setActiveServiceCategory(idx);
+                                                                setActiveSubService(0);
+                                                            }}
+                                                            className={cn(
+                                                                "flex-1 py-4 text-[13px] font-bold uppercase tracking-wider transition-all duration-300 relative group/btn",
+                                                                activeServiceCategory === idx
+                                                                    ? "text-[#081A4A]"
+                                                                    : "text-slate-500 hover:text-[#081A4A]"
+                                                            )}
+                                                        >
+                                                            {activeServiceCategory === idx && (
+                                                                <motion.div
+                                                                    layoutId="activeTab"
+                                                                    className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#081A4A]"
+                                                                />
+                                                            )}
+                                                            <span className="relative z-10">{cat.title}</span>
+                                                        </button>
+                                                    ))}
+                                                </div>
                                             </div>
 
-                                            {/* 2. CONTENT AREA */}
-                                            <div className="w-full h-full flex-1 relative bg-[#081A4A]/60 backdrop-blur-xl">
-                                                {/* Decorative background */}
-                                                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-
-                                                {/* Dynamic Content */}
+                                            {/* 2. CONTENT AREA - White Background */}
+                                            <div className="w-full h-full flex-1 relative bg-white flex">
                                                 <AnimatePresence mode="wait">
                                                     <motion.div
                                                         key={activeServiceCategory}
-                                                        initial={{ opacity: 0, y: 10 }}
-                                                        animate={{ opacity: 1, y: 0 }}
-                                                        exit={{ opacity: 0, y: 10 }}
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
                                                         transition={{ duration: 0.2 }}
-                                                        className="h-full flex flex-col p-8"
+                                                        className="w-full flex"
                                                     >
                                                         {/* Nested Sidebar Layout for IT Services */}
                                                         {serviceCategories[activeServiceCategory].subCategories ? (
-                                                            <div className="flex h-full gap-8">
-                                                                {/* Level 3: Inner Sidebar */}
-                                                                <div className="w-1/4 flex flex-col gap-2 border-r border-white/10 pr-4">
+                                                            <div className="w-full flex h-full">
+                                                                {/* Level 3: Sidebar - Matches Exact Image */}
+                                                                <div className="w-[300px] flex flex-col gap-1 bg-[#F8FAFC] py-6 px-4 shrink-0">
                                                                     {serviceCategories[activeServiceCategory].subCategories.map((sub, idx) => (
                                                                         <button
                                                                             key={idx}
                                                                             onMouseEnter={() => setActiveSubService(idx)}
                                                                             className={cn(
-                                                                                "text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-between group/sub",
+                                                                                "text-left px-5 py-4 rounded-lg text-[14px] font-semibold transition-all duration-200 flex items-center justify-between group/sub",
                                                                                 activeSubService === idx
-                                                                                    ? "bg-cyan-500 text-black shadow-lg font-bold scale-105"
-                                                                                    : "text-slate-300 hover:text-white hover:bg-white/10"
+                                                                                    ? "bg-blue-300 text-[#081A4A] shadow-md scale-[1.02]"
+                                                                                    : "text-slate-500 hover:bg-white hover:text-[#081A4A] hover:shadow-sm"
                                                                             )}
                                                                         >
-                                                                            <span>
-                                                                                {sub.name}
-                                                                                {sub.expansion && (
-                                                                                    <span className="text-[10px] font-normal opacity-75 ml-1">
-                                                                                        ({sub.expansion})
-                                                                                    </span>
-                                                                                )}
-                                                                            </span>
+                                                                            <span>{sub.name}</span>
                                                                             {activeSubService === idx && (
-                                                                                <motion.div layoutId="subArrow">
-                                                                                    <RiArrowRightUpLine size={16} className="text-black" />
-                                                                                </motion.div>
+                                                                                <RiArrowRightUpLine size={16} className="text-[#081A4A]" />
                                                                             )}
                                                                         </button>
                                                                     ))}
                                                                 </div>
 
-                                                                {/* Level 4: Grid */}
-                                                                <div className="w-3/4 flex flex-col">
-                                                                    <div className="mb-6">
-                                                                        <h4 className="text-xl font-bold text-white mb-2">
-                                                                            {serviceCategories[activeServiceCategory].subCategories[activeSubService].name}
-                                                                        </h4>
-                                                                        <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
-                                                                            {serviceCategories[activeServiceCategory].subCategories[activeSubService].description}
-                                                                        </p>
+                                                                {/* Level 4: Content Grid with Banner */}
+                                                                <div className="flex-1 p-6 overflow-y-auto">
+                                                                    {/* (Header Removed as requested) */}
+
+                                                                    {/* Hero Banner for Subcategory */}
+                                                                    <div className="w-full bg-gradient-to-r from-[#0f286e] via-[#163a91] to-[#1e4dc9] rounded-xl p-6 mb-8 relative overflow-hidden text-white shadow-lg">
+
+                                                                        {/* Background Decoration */}
+                                                                        <div className="absolute right-0 top-0 h-full w-3/5 opacity-20 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover mix-blend-overlay"></div>
+
+                                                                        <div className="relative z-10 max-w-lg">
+                                                                            <h4 className="text-2xl font-bold mb-2">
+                                                                                {serviceCategories[activeServiceCategory].subCategories[activeSubService].name}
+                                                                            </h4>
+                                                                            <p className="text-sm text-blue-100 leading-relaxed opacity-90 max-w-sm">
+                                                                                {serviceCategories[activeServiceCategory].subCategories[activeSubService].description}
+                                                                            </p>
+                                                                        </div>
                                                                     </div>
-                                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-min">
+
+                                                                    {/* Cards Grid */}
+                                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                                         {serviceCategories[activeServiceCategory].subCategories[activeSubService].items.map((item, i) => (
                                                                             <MegaMenuCard key={i} item={item} />
                                                                         ))}
@@ -443,24 +463,23 @@ const Navbar = () => {
                                                                 </div>
                                                             </div>
                                                         ) : (
-                                                            /* Standard Grid Layout */
-                                                            <>
-                                                                <div className="mb-8">
-                                                                    <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                                                            /* Standard Grid Layout (No Sidebar) */
+                                                            <div className="w-full p-8">
+                                                                <div className="mb-6 border-b border-gray-100 pb-4">
+                                                                    <h3 className="text-2xl font-bold text-[#081A4A] mb-2">
                                                                         {serviceCategories[activeServiceCategory].title}
-                                                                        <span className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent ml-4" />
                                                                     </h3>
-                                                                    <p className="text-slate-400 max-w-2xl text-sm leading-relaxed">
+                                                                    <p className="text-slate-500 max-w-2xl text-sm">
                                                                         {serviceCategories[activeServiceCategory].description}
                                                                     </p>
                                                                 </div>
 
-                                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-min">
+                                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                                                     {serviceCategories[activeServiceCategory].items.map((item, i) => (
                                                                         <MegaMenuCard key={i} item={item} />
                                                                     ))}
                                                                 </div>
-                                                            </>
+                                                            </div>
                                                         )}
                                                     </motion.div>
                                                 </AnimatePresence>
@@ -481,7 +500,7 @@ const Navbar = () => {
                         </Link>
                     </div>
 
-                    {/* Mobile Button - NOW INSIDE FLEX CONTAINER */}
+                    {/* Mobile Button */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className="lg:hidden text-white p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-lg hover:bg-white/20 transition-all"
@@ -489,11 +508,11 @@ const Navbar = () => {
                     >
                         {isOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
-                </div>
-            </nav>
+                </div >
+            </nav >
 
             {/* Mobile Menu Backdrop & Drawer */}
-            <AnimatePresence>
+            < AnimatePresence >
                 {isOpen && (
                     <>
                         {/* Backdrop */}
@@ -533,14 +552,14 @@ const Navbar = () => {
                                                 <button
                                                     onClick={() => setMobileSubMenuOpen(!mobileSubMenuOpen)}
                                                     className={cn(
-                                                        "w-full flex items-center justify-between text-sm font-bold text-white hover:text-cyan-400 transition-colors uppercase tracking-widest py-4 text-left border-b border-white/5",
-                                                        mobileSubMenuOpen ? "text-cyan-400" : ""
+                                                        "w-full flex items-center justify-between text-sm font-bold text-white hover:text-blue-400 transition-colors uppercase tracking-widest py-4 text-left border-b border-white/5",
+                                                        mobileSubMenuOpen ? "text-blue-400" : ""
                                                     )}
                                                 >
                                                     {link.name}
                                                     <ChevronDown
                                                         size={16}
-                                                        className={cn("transition-transform duration-300", mobileSubMenuOpen ? "rotate-180 text-cyan-400" : "text-slate-500")}
+                                                        className={cn("transition-transform duration-300", mobileSubMenuOpen ? "rotate-180 text-blue-400" : "text-slate-500")}
                                                     />
                                                 </button>
 
@@ -556,8 +575,8 @@ const Navbar = () => {
                                                             <div className="pl-4 py-2 space-y-4">
                                                                 {serviceCategories.map((category, idx) => (
                                                                     <div key={idx} className="space-y-4">
-                                                                        <h4 className="text-cyan-500 font-bold text-[10px] uppercase tracking-widest opacity-80 flex items-center gap-2">
-                                                                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
+                                                                        <h4 className="text-blue-500 font-bold text-[10px] uppercase tracking-widest opacity-80 flex items-center gap-2">
+                                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                                                                             {category.title}
                                                                         </h4>
 
@@ -611,7 +630,7 @@ const Navbar = () => {
                                             <Link
                                                 to={link.path}
                                                 onClick={() => setIsOpen(false)}
-                                                className="block w-full text-sm font-bold text-white hover:text-cyan-400 transition-colors uppercase tracking-widest py-4 border-b border-white/5"
+                                                className="block w-full text-sm font-bold text-white hover:text-blue-400 transition-colors uppercase tracking-widest py-4 border-b border-white/5"
                                             >
                                                 {link.name}
                                             </Link>
@@ -628,51 +647,80 @@ const Navbar = () => {
                                 <Link
                                     to="/contact"
                                     onClick={() => setIsOpen(false)}
-                                    className="flex items-center justify-center w-full py-3.5 bg-gradient-to-r from-[#0ea5e9] to-[#2563eb] text-white font-bold rounded-lg uppercase tracking-wider text-sm shadow-lg hover:shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5"
+                                    className="flex items-center justify-center w-full py-3.5 bg-gradient-to-r from-[#0ea5e9] to-[#2563eb] text-white font-bold rounded-lg uppercase tracking-wider text-sm shadow-lg hover:shadow-blue-500/25 transition-all transform hover:-translate-y-0.5"
                                 >
                                     Contact Us
                                 </Link>
                             </div>
                         </motion.div>
                     </>
-                )}
-            </AnimatePresence>
+                )
+                }
+            </AnimatePresence >
         </>
     );
 };
 
 // Helper Component for Mega Menu Cards (to clean up main code)
-// Helper Component for Mega Menu Cards (Sidebar Layout Style)
-const MegaMenuCard = ({ item }) => (
-    <Link
-        to={item.path}
-        className="flex items-start gap-4 p-4 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 hover:border-white/30 transition-all duration-300 group h-full"
-    >
-        <div className="p-3 rounded-lg bg-[#0b1d52] text-cyan-400 group-hover:bg-cyan-400 group-hover:text-[#081A4A] transition-all duration-300 shadow-lg shrink-0 mt-0.5 border border-white/5">
-            <item.icon size={22} />
-        </div>
-        <div className="flex flex-col gap-1.5">
-            <div className="flex items-center justify-between">
-                <span className="text-[15px] font-bold text-white transition-colors leading-tight">
-                    {item.name}
-                </span>
-                <RiArrowRightUpLine size={16} className="text-slate-500 group-hover:text-cyan-400 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0" />
+// Helper Component for Mega Menu Cards (Compact & Clean)
+const MegaMenuCard = ({ item }) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+
+    return (
+        <Link
+            to={item.path}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className={`flex flex-col p-4 rounded-xl border shadow-sm transition-all duration-300 h-full relative
+                ${isHovered
+                    ? "bg-[#081A4A] border-[#081A4A] translate-y-[-2px] shadow-xl"
+                    : "bg-white border-slate-100"
+                }`}
+        >
+            <div className="flex items-start gap-4 mb-3">
+                {/* Icon Box - Default: Dark Blue | Hover: White */}
+                <div className={`p-2.5 rounded-lg transition-all duration-300 shrink-0 border
+                    ${isHovered
+                        ? "bg-white text-[#081A4A] border-transparent"
+                        : "bg-[#081A4A] text-white border-[#081A4A]"
+                    }`}>
+                    <item.icon size={22} />
+                </div>
+
+                {/* Title & Desc */}
+                <div className="flex flex-col gap-1">
+                    <span className={`text-[14px] font-bold transition-colors leading-tight
+                        ${isHovered ? "text-white" : "text-[#081A4A]"}`}>
+                        {item.name}
+                    </span>
+                    {item.desc && (
+                        <p className={`text-[11px] leading-relaxed line-clamp-2 transition-colors
+                            ${isHovered ? "text-white" : "text-slate-600"}`}>
+                            {item.desc}
+                        </p>
+                    )}
+                </div>
             </div>
 
-            {item.desc && (
-                <p className="text-xs text-blue-200 font-medium leading-relaxed opacity-90 group-hover:opacity-100">
-                    {item.desc}
-                </p>
-            )}
-        </div>
-    </Link>
-);
+            {/* Learn More Button - Default: Dark Blue | Hover: White */}
+            <div className="mt-auto flex justify-end">
+                <span className={`text-[10px] font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all duration-300 shadow-sm
+                    ${isHovered
+                        ? "bg-white text-[#081A4A]"
+                        : "bg-[#081A4A] text-white"
+                    }`}>
+                    Learn More <RiArrowRightUpLine size={12} />
+                </span>
+            </div>
+        </Link>
+    );
+};
 
 const SocialIcons = ({ mobile }) => (
     <>
-        <a href="https://www.linkedin.com/company/infolexus-solutions/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors"><Linkedin size={mobile ? 20 : 18} /></a>
-        <a href="https://www.instagram.com/infolexus_solutions?igsh=MWxmOXFpanBseTJ2bA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors"><Instagram size={mobile ? 20 : 18} /></a>
-        <a href="https://x.com/InfolexusOff" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors"><RiTwitterXFill size={mobile ? 20 : 18} /></a>
+        <a href="https://www.linkedin.com/company/infolexus-solutions/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400 transition-colors"><Linkedin size={mobile ? 20 : 18} /></a>
+        <a href="https://www.instagram.com/infolexus_solutions?igsh=MWxmOXFpanBseTJ2bA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400 transition-colors"><Instagram size={mobile ? 20 : 18} /></a>
+        <a href="https://x.com/InfolexusOff" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400 transition-colors"><RiTwitterXFill size={mobile ? 20 : 18} /></a>
     </>
 );
 

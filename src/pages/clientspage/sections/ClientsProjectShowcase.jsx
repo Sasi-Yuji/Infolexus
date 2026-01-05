@@ -7,8 +7,44 @@ import botiqueImg from '../../../assets/botique.jpeg';
 import crmImg from '../../../assets/CRM LANDING.png';
 import mobileImg from '../../../assets/mobile1.jpeg';
 import hrImg from '../../../assets/HRM.png';
+import soapNotesImg from '../../../assets/soap_notes.png';
+import soapNotesVideo from '../../../assets/SOAP Notes Generator.mp4';
 
 const projects = [
+    {
+        id: 6,
+        title: 'AI-Powered SOAP Notes Generator',
+        category: 'GenAI Healthcare Application',
+        description: 'A cutting-edge GenAI healthcare application built using GPT to automate and enhance clinical documentation. This solution intelligently converts patient conversations, clinician dictations, and medical inputs into structured SOAP notes—covering Subjective, Objective, Assessment, and Plan sections—with high accuracy and medical relevance. Using advanced Generative AI models, the system understands complex medical terminology, extracts key symptoms, vitals, histories, and diagnoses, and formats them into clean, consistent documentation ready for EHR integration.',
+        stack: ['React', 'Python', 'OpenAI', 'AWS', 'Tailwind'],
+        image: soapNotesImg,
+        video: soapNotesVideo,
+        accent: 'text-cyan-500',
+        bgAccent: 'bg-cyan-500/10',
+        link: '#'
+    },
+    {
+        id: 4,
+        title: 'HeShe Style Wear',
+        category: 'E-commerce / Retail',
+        description: 'We developed a premium, performance-driven eCommerce platform for HeShe Style Wear, creating a seamless and visually engaging shopping experience that drives customer engagement and growth.',
+        stack: ['Html', 'css', 'js', 'Django', 'SQL'],
+        image: botiqueImg,
+        accent: 'text-amber-500',
+        bgAccent: 'bg-amber-500/10',
+        link: '#'
+    },
+    {
+        id: 2,
+        title: 'Nexus HR',
+        category: 'Enterprise / HRM',
+        description: 'Managing a distributed workforce requires precision. Nexus HR provides a centralized hub for payroll, attendance, and performance tracking with predictive analytics for seamless workforce management.',
+        stack: ['React', 'Node.js', 'MongoDB', 'AWS'],
+        image: hrImg,
+        accent: 'text-blue-500',
+        bgAccent: 'bg-blue-500/10',
+        link: '#'
+    },
     {
         id: 5,
         title: 'Deploynix',
@@ -30,32 +66,10 @@ const projects = [
         accent: 'text-teal-500',
         bgAccent: 'bg-teal-500/10',
         link: '#'
-    },
-    {
-        id: 2,
-        title: 'Nexus HR',
-        category: 'Enterprise / HRM',
-        description: 'Managing a distributed workforce requires precision. Nexus HR provides a centralized hub for payroll, attendance, and performance tracking with predictive analytics for seamless workforce management.',
-        stack: ['React', 'Node.js', 'MongoDB', 'AWS'],
-        image: hrImg,
-        accent: 'text-blue-500',
-        bgAccent: 'bg-blue-500/10',
-        link: '#'
-    },
-    {
-        id: 4,
-        title: 'HeShe Style Wear',
-        category: 'E-commerce / Retail',
-        description: 'We developed a premium, performance-driven eCommerce platform for HeShe Style Wear, creating a seamless and visually engaging shopping experience that drives customer engagement and growth.',
-        stack: ['Html', 'css', 'js', 'Django', 'SQL'],
-        image: botiqueImg,
-        accent: 'text-amber-500',
-        bgAccent: 'bg-amber-500/10',
-        link: '#'
     }
 ];
 
-const MultiDeviceMockup = ({ image }) => {
+const MultiDeviceMockup = ({ image, video }) => {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -78,7 +92,11 @@ const MultiDeviceMockup = ({ image }) => {
                 <div className="bg-slate-900 rounded-t-xl p-[1px] md:p-[2px] shadow-2xl border border-slate-700 relative">
                     <div className="aspect-[16/9] bg-slate-950 rounded overflow-hidden relative group-hover:ring-2 ring-blue-500/20 transition-all">
                         <motion.div className="w-full h-full relative">
-                            <img src={desktopSrc} alt="Desktop" className="w-full h-full object-cover object-top" />
+                            {video ? (
+                                <video src={video} className="w-full h-full object-cover object-top" autoPlay loop muted playsInline />
+                            ) : (
+                                <img src={desktopSrc} alt="Desktop" className="w-full h-full object-cover object-top" />
+                            )}
                         </motion.div>
                         {/* Glare */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
@@ -102,7 +120,11 @@ const MultiDeviceMockup = ({ image }) => {
                 <div className="bg-[#1a1a1a] rounded-t-lg p-[1px] shadow-2xl ring-1 ring-white/10">
                     <div className="aspect-[16/10] bg-black rounded-[2px] overflow-hidden relative">
                         <motion.div className="w-full h-full relative">
-                            <img src={desktopSrc} alt="Laptop" className="w-full h-full object-cover object-top" />
+                            {video ? (
+                                <video src={video} className="w-full h-full object-cover object-top" autoPlay loop muted playsInline />
+                            ) : (
+                                <img src={desktopSrc} alt="Laptop" className="w-full h-full object-cover object-top" />
+                            )}
                         </motion.div>
                         <div className="absolute inset-0 bg-gradient-to-bl from-white/5 to-transparent pointer-events-none" />
                     </div>
@@ -159,7 +181,7 @@ const ProjectCard = ({ project, index }) => {
         >
             {/* Visual Side */}
             <div className="w-full lg:w-1/2">
-                <MultiDeviceMockup image={project.image} />
+                <MultiDeviceMockup image={project.image} video={project.video} />
             </div>
 
             {/* Content Side */}
