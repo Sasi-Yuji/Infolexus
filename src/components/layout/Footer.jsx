@@ -70,7 +70,7 @@ const Footer = () => {
                         <ul className="space-y-4 text-sm text-slate-400 mx-auto w-fit">
                             <li className="flex items-start gap-3">
                                 <MapPin size={18} className="text-blue-500 shrink-0 mt-1" />
-                                <span>Infolexus Solutions,<br />Coimbatore, Tamil Nadu, India</span>
+                                <span>Infolexus Solutions,<br />63/54-55, Dhamu Nagar,<br /> Puliyakulam Road,<br /> Coimbatore- 641045</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <Mail size={18} className="text-blue-500 shrink-0 mt-1" />

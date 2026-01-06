@@ -44,7 +44,7 @@ const Walkthrough = ({ onComplete }) => {
             <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-4">
                 <video
                     ref={videoRef}
-                    className="w-full max-w-4xl object-contain outline-none border-none mix-blend-lighten"
+                    className="w-full max-w-2xl object-contain outline-none border-none mix-blend-lighten"
                     src={walkthroughVideo}
                     muted
                     playsInline
