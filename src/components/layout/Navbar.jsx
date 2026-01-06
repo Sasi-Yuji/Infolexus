@@ -14,7 +14,7 @@ import {
     RiTwitterXFill, RiUserSearchFill,
     RiCloudLine, RiRobotFill, RiChatSmile3Fill, RiShieldCheckFill,
     RiServerFill, RiWindowFill, RiLinksFill, RiMoneyDollarCircleFill,
-    RiShoppingCartFill, RiSettings4Fill
+    RiShoppingCartFill, RiSettings4Fill, RiGlobalLine
 } from 'react-icons/ri';
 import { cn } from '../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -117,7 +117,7 @@ const Navbar = () => {
                     description: "Ensuring reliability and scalability through rigorous testing and cloud infrastructure.",
                     items: [
                         { name: 'Manual & Automation Testing', icon: RiCheckboxCircleFill, path: '/services/testing-automation', desc: 'Rigorous testing ensuring bug-free software delivery.' },
-                        { name: 'CI/CD & API Testing', icon: RiLinksFill, path: '/services/cicd-api', desc: 'Seamless integration and continuous deployment pipelines.' },
+                        { name: 'CI/CD & API Testing', icon: RiGlobalLine, path: '/services/cicd-api', desc: 'Seamless integration and continuous deployment pipelines.' },
                         { name: 'Hosting & Maintenance', icon: RiServerFill, path: '/services/hosting-maintenance', desc: 'Secure hosting and proactive system maintenance.' },
                         { name: 'DevOps Services', icon: RiCloudLine, path: '/services/devops', desc: 'Optimizing development and operations collaboration.' },
                         { name: 'Monitoring & Cloud', icon: RiShieldCheckFill, path: '/services/monitoring-cloud', desc: 'Real-time monitoring and scalable cloud solutions.' }
@@ -154,7 +154,7 @@ const Navbar = () => {
                     description: "Dominate search results with a complete organic strategy.",
                     items: [
                         { name: 'On-page SEO', icon: RiSearchFill, path: '/dm-services/on-page-seo', desc: 'Optimizing content and structure for better rankings.' },
-                        { name: 'Off-page SEO', icon: RiLinksFill, path: '/dm-services/off-page-seo', desc: 'Building authority with quality backlinks.' },
+                        { name: 'Off-page SEO', icon: RiGlobalLine, path: '/dm-services/off-page-seo', desc: 'Building authority with quality backlinks.' },
                         { name: 'Technical SEO', icon: RiCodeBoxFill, path: '/dm-services/technical-seo', desc: 'Enhancing site health and crawlability.' }
                     ]
                 },
@@ -671,13 +671,13 @@ const MegaMenuCard = ({ item }) => {
             to={item.path}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`flex flex-col p-4 rounded-xl border shadow-sm transition-all duration-300 h-full relative
+            className={`flex flex-col p-4 rounded-xl border transition-all duration-300 h-full relative shadow-lg shadow-gray-300
                 ${isHovered
-                    ? "bg-[#081A4A] border-[#081A4A] translate-y-[-2px] shadow-xl"
+                    ? "bg-[#081A4A] border-[#081A4A] translate-y-[-2px] shadow-2xl"
                     : "bg-white border-slate-100"
                 }`}
         >
-            <div className="flex items-start gap-4 mb-3">
+            <div className="flex items-start gap-4">
                 {/* Icon Box - Default: Dark Blue | Hover: White */}
                 <div className={`p-2.5 rounded-lg transition-all duration-300 shrink-0 border
                     ${isHovered
@@ -702,15 +702,10 @@ const MegaMenuCard = ({ item }) => {
                 </div>
             </div>
 
-            {/* Learn More Button - Default: Dark Blue | Hover: White */}
-            <div className="mt-auto flex justify-end">
-                <span className={`text-[10px] font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all duration-300 shadow-sm
-                    ${isHovered
-                        ? "bg-white text-[#081A4A]"
-                        : "bg-[#081A4A] text-white"
-                    }`}>
-                    Learn More <RiArrowRightUpLine size={12} />
-                </span>
+            {/* Hover Arrow */}
+            <div className={`absolute bottom-4 right-4 transition-all duration-300 transform 
+                ${isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}>
+                <RiArrowRightUpLine size={24} className="text-white" />
             </div>
         </Link>
     );

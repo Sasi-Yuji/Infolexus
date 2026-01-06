@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import heroBg from '../../../assets/client hero.jpg';
+import heroBg from '../../../assets/client-hero.jpeg';
 
 const ClientsHero = () => {
     return (

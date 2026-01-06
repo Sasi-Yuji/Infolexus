@@ -9,14 +9,34 @@ import botiqueMobileImg from '../../../assets/botique-mobile.png';
 import crmImg from '../../../assets/CRM LANDING.png';
 import crmTabImg from '../../../assets/CRM-tab.jpg';
 import crmMobileImg from '../../../assets/CRM-mobile.jpeg';
-import mobileImg from '../../../assets/mobile1.jpeg';
+
 import hrImg from '../../../assets/HRM.png';
 import hrTabImg from '../../../assets/HRm-TAB.jpeg';
 import hrMobileImg from '../../../assets/HRM-MOBILE.jpeg';
 import soapNotesImg from '../../../assets/soap_notes.png';
 import soapNotesVideo from '../../../assets/SOAP Notes Generator.mp4';
+import voiceDoctorVideo from '../../../assets/voice-booking.mp4';
+import voiceDoctorImgDesktop from '../../../assets/voice_appointment_app.png';
+import voiceDoctorImgTablet from '../../../assets/voice_booking_tablet.png';
+import voiceDoctorImgMobile from '../../../assets/voice_booking_mobile.png';
 
 const projects = [
+    {
+        id: 7,
+        title: 'GenAI Voice Doctor Appointment System',
+        category: 'Healthcare Automation / GenAI',
+        description: 'An intelligent healthcare automation solution built using advanced GPT models to simplify patient scheduling. Patients can book, reschedule, or cancel appointments entirely through natural voice conversations. The system handles queries, checks real-time availability, and confirms bookings with high accuracy, reducing administrative workload and enhancing patient experience.',
+        stack: ['React', 'Python', 'OpenAI', 'Node.js', 'AWS'],
+        image: {
+            desktop: voiceDoctorImgDesktop,
+            tablet: { src: voiceDoctorImgTablet, className: 'scale-110' },
+            mobile: { src: voiceDoctorImgMobile, className: 'scale-110' }
+        },
+        video: voiceDoctorVideo,
+        accent: 'text-purple-500',
+        bgAccent: 'bg-purple-500/10',
+        link: '#'
+    },
     {
         id: 6,
         title: 'AI-Powered SOAP Notes Generator',

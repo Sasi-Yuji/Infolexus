@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import walkthroughVideo from '../../assets/video4.mp4';
+import walkthroughVideo from '../../assets/walk-through.mp4';
 
 const Walkthrough = ({ onComplete }) => {
     const videoRef = useRef(null);
@@ -9,10 +9,8 @@ const Walkthrough = ({ onComplete }) => {
         const video = videoRef.current;
         if (video) {
             video.play().catch(error => {
-                // console.warn("Autoplay prevented:", error);
-                // If autoplay is blocked, we might want to show a play button or just skip.
-                // For now, let's just skip if it fails (or user interaction is required).
-                // But usually, muted autoplay works.
+                // Autoplay failed - usually due to browser policy. 
+                // We just proceed since we have muted autoplay.
             });
 
             const handleEnded = () => {
@@ -32,13 +30,13 @@ const Walkthrough = ({ onComplete }) => {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
-            className="fixed inset-0 z-[] flex items-center justify-center overflow-hidden bg-[#030B25]"
+            className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#030B25]"
         >
             {/* Main Video Container */}
             <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-4">
                 <video
                     ref={videoRef}
-                    className="w-full max-w-4xl object-contain outline-none border-none"
+                    className="w-full max-w-4xl object-contain outline-none border-none mix-blend-lighten"
                     src={walkthroughVideo}
                     muted
                     playsInline

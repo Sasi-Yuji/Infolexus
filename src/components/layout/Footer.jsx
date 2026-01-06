@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Linkedin, Instagram, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { Facebook, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import { RiTwitterXFill } from 'react-icons/ri';
 import footerLogo from '../../assets/lnfolexus_4k_WALLPAPER_WITHOUT_CAPTION___1_-removebg-preview.png';
 import TermsModal from './TermsModal';

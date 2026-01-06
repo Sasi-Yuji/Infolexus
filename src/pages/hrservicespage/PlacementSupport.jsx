@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight } from 'lucide-react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { hrServiceDetails } from '../../data/hrServiceDetails';
+import InquiryModal from '../../components/ui/InquiryModal';
 
 import placementHeroBg from '../../assets/placement_hero.png';
 import ClientMarquee from '../../components/ui/ClientMarquee';
 
 const PlacementSupport = () => {
     const location = useLocation();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Keys for Placement Support Services
     const serviceKeys = [
@@ -127,13 +129,13 @@ const PlacementSupport = () => {
                                     </ul>
 
                                     <div className="pt-6">
-                                        <Link
-                                            to="/contact"
-                                            className="inline-flex items-center gap-3 text-white bg-indigo-600 px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-500/30 group"
+                                        <button
+                                            onClick={() => setIsModalOpen(true)}
+                                            className="inline-flex items-center gap-3 text-white bg-indigo-600 px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-500/30 group cursor-pointer"
                                         >
                                             Inquire Now
                                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                                        </Link>
+                                        </button>
                                     </div>
                                 </motion.div>
 
@@ -193,14 +195,21 @@ const PlacementSupport = () => {
                     <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-10">
                         Join our placement program and find the perfect role for your skills.
                     </p>
-                    <Link
-                        to="/contact"
-                        className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-indigo-600 text-white font-bold rounded-full shadow-lg hover:shadow-indigo-500/50 hover:scale-105 transition-all"
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-indigo-600 text-white font-bold rounded-full shadow-lg hover:shadow-indigo-500/50 hover:scale-105 transition-all cursor-pointer"
                     >
                         Get Placed Today
-                    </Link>
+                    </button>
                 </div>
             </div>
+
+            {/* Inquiry Modal */}
+            <InquiryModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                type="placement"
+            />
         </div>
     );
 };

@@ -8,7 +8,8 @@ import {
     RiYoutubeFill,
     RiWhatsappLine,
     RiLinksFill,
-    RiCloseLine
+    RiCloseLine,
+    RiGlobalLine
 } from 'react-icons/ri';
 import { ChevronUp } from 'lucide-react';
 
@@ -91,7 +92,7 @@ const FloatingSocialBar = () => {
                     className="flex items-center justify-center w-12 h-12 bg-white text-gray-800 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300 border border-gray-200"
                     title={isDesktopOpen ? "Close" : "Show Social Links"}
                 >
-                    {isDesktopOpen ? <RiCloseLine size={24} /> : <RiLinksFill size={24} />}
+                    {isDesktopOpen ? <RiCloseLine size={24} /> : <RiGlobalLine size={24} />}
                 </button>
             </div>
 

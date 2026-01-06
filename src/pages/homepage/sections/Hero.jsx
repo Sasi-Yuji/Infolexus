@@ -45,7 +45,6 @@ const Hero = () => {
             {/* Content - Text Section (Left Aligned) */}
             <div className="relative z-10 w-full px-6 md:pl-10">
                 <div className="pt-10 pb-4 max-w-4xl">
-                    {/* Eyebrow Removed as requested */}
 
                     {/* Heading */}
                     <div className="mb-8 drop-shadow-lg min-h-[160px] md:min-h-[120px]">
