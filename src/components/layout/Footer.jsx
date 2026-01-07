@@ -16,10 +16,10 @@ const Footer = () => {
 
             <div className="w-full px-4 md:px-4 relative z-10">
 
-                <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-12 lg:gap-8 mb-16">
+                <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-12 lg:gap-12 mb-16">
 
                     {/* Brand Column (Span 4) */}
-                    <div className="col-span-2 lg:col-span-4 flex flex-col items-start pr-0 lg:pr-12">
+                    <div className="col-span-2 lg:col-span-3 flex flex-col items-start pr-0">
                         <Link to="/" className="inline-block mb-8">
                             <img
                                 src={footerLogo}
@@ -53,7 +53,7 @@ const Footer = () => {
                     </div>
 
                     {/* Links Column (Span 2) */}
-                    <div className="col-span-1 lg:col-span-2">
+                    <div className="col-span-1 lg:col-span-2 lg:pl-10">
                         <h4 className="text-white font-bold mb-6">Company</h4>
                         <ul className="space-y-4 text-sm text-slate-400">
                             <li><Link to="/" className="hover:text-blue-400 transition-colors">Home</Link></li>
@@ -65,7 +65,7 @@ const Footer = () => {
                     </div>
 
                     {/* Contact Column (Span 3) - Moved Left */}
-                    <div className="col-span-1 lg:col-span-3">
+                    <div className="col-span-1 lg:col-span-3 flex flex-col lg:items-center">
                         <h4 className="text-white font-bold mb-6">Contact Us</h4>
                         <ul className="space-y-4 text-xs md:text-sm text-slate-400">
                             <li className="flex items-start gap-3">
@@ -88,9 +88,9 @@ const Footer = () => {
                     </div>
 
                     {/* Map Column (Span 3) - Added Right */}
-                    <div className="col-span-2 lg:col-span-3">
+                    <div className="col-span-2 lg:col-span-3 flex flex-col lg:items-center">
                         <h4 className="text-white font-bold mb-6">Location</h4>
-                        <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-800 shadow-lg pr-4 md:pr-0">
+                        <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-800 shadow-lg">
                             <iframe
                                 title="Office Location"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.347263595567!2d76.9889976757065!3d11.006997092116035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859eb03584a43%3A0x32befeb42d4f385a!2sInfolexus%20Solutions!5e0!3m2!1sen!2sin!4v1713437292323!5m2!1sen!2sin"

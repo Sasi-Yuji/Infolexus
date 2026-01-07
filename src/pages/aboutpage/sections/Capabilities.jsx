@@ -56,47 +56,12 @@ const Capabilities = () => {
                         </div>
                     </motion.div>
 
-                    {/* HR Services */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="group relative bg-white/5 backdrop-blur-md rounded-[2rem] p-8 border border-white/10 overflow-hidden transition-all duration-500 hover:border-purple-500/50 hover:shadow-[0_0_50px_-12px_rgba(168,85,247,0.5)] hover:-translate-y-2"
-                    >
-                        {/* Hover Gradient Background */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                        <div className="relative z-10">
-                            <div className="w-16 h-16 bg-purple-500/10 text-purple-400 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(168,85,247,0.0)] group-hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">
-                                <Users size={30} strokeWidth={2.5} />
-                            </div>
-
-                            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-100 transition-colors">HR Services</h3>
-                            <p className="text-purple-400 font-medium text-xs mb-6 uppercase tracking-widest">Recruit & Manage</p>
-
-                            <p className="text-slate-300 leading-relaxed text-sm mb-6 group-hover:text-white/90 transition-colors">
-                                From <strong>Recruitment & Talent Acquisition</strong> to <strong>Staffing Solutions</strong> and <strong>HR Consulting</strong>, we handle it all. We also streamline operations with <strong>Onboarding</strong>, <strong>Payroll Administration</strong>, <strong>Skill Development</strong>, and <strong>Performance Management</strong> support.
-                            </p>
-
-                            <div
-                                onClick={() => {
-                                    window.dispatchEvent(new CustomEvent('openMegaMenu', { detail: { categoryIndex: 2 } }));
-                                }}
-                                className="flex items-center gap-2 text-purple-400 font-semibold text-sm cursor-pointer group/link"
-                            >
-                                <span>Explore Services</span>
-                                <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
-                            </div>
-                        </div>
-                    </motion.div>
-
                     {/* Digital Marketing */}
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
+                        transition={{ delay: 0.1 }}
                         className="group relative bg-white/5 backdrop-blur-md rounded-[2rem] p-8 border border-white/10 overflow-hidden transition-all duration-500 hover:border-orange-500/50 hover:shadow-[0_0_50px_-12px_rgba(249,115,22,0.5)] hover:-translate-y-2"
                     >
                         {/* Hover Gradient Background */}
@@ -119,6 +84,41 @@ const Capabilities = () => {
                                     window.dispatchEvent(new CustomEvent('openMegaMenu', { detail: { categoryIndex: 1 } }));
                                 }}
                                 className="flex items-center gap-2 text-orange-400 font-semibold text-sm cursor-pointer group/link"
+                            >
+                                <span>Explore Services</span>
+                                <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* HR Services */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="group relative bg-white/5 backdrop-blur-md rounded-[2rem] p-8 border border-white/10 overflow-hidden transition-all duration-500 hover:border-purple-500/50 hover:shadow-[0_0_50px_-12px_rgba(168,85,247,0.5)] hover:-translate-y-2"
+                    >
+                        {/* Hover Gradient Background */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                        <div className="relative z-10">
+                            <div className="w-16 h-16 bg-purple-500/10 text-purple-400 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(168,85,247,0.0)] group-hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">
+                                <Users size={30} strokeWidth={2.5} />
+                            </div>
+
+                            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-100 transition-colors">HR Services</h3>
+                            <p className="text-purple-400 font-medium text-xs mb-6 uppercase tracking-widest">Recruit & Manage</p>
+
+                            <p className="text-slate-300 leading-relaxed text-sm mb-6 group-hover:text-white/90 transition-colors">
+                                From <strong>Recruitment & Talent Acquisition</strong> to <strong>Staffing Solutions</strong> and <strong>HR Consulting</strong>, we handle it all. We also streamline operations with <strong>Onboarding</strong>, <strong>Payroll Administration</strong>, <strong>Skill Development</strong>, and <strong>Performance Management</strong> support.
+                            </p>
+
+                            <div
+                                onClick={() => {
+                                    window.dispatchEvent(new CustomEvent('openMegaMenu', { detail: { categoryIndex: 2 } }));
+                                }}
+                                className="flex items-center gap-2 text-purple-400 font-semibold text-sm cursor-pointer group/link"
                             >
                                 <span>Explore Services</span>
                                 <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
