@@ -5,7 +5,7 @@ import * as SiIcons from 'react-icons/si';
 
 
 
-import { FaAws, FaJava, FaWindows, FaBook, FaCogs, FaServer, FaRobot, FaChartBar, FaFileExcel, FaLink, FaChartLine, FaChartArea, FaPlayCircle, FaFlask } from 'react-icons/fa';
+import { FaAws, FaJava, FaWindows, FaBook, FaCogs, FaServer, FaRobot, FaChartBar, FaFileExcel, FaLink, FaChartLine, FaChartArea, FaPlayCircle, FaFlask, FaLock, FaApple, FaDesktop } from 'react-icons/fa';
 import { VscAzure } from 'react-icons/vsc';
 import { RiTwitterXFill } from 'react-icons/ri';
 import { Video } from 'lucide-react'; // Import Video icon for fallbacks
@@ -131,6 +131,10 @@ const techMap = {
     "Cisco": { icon: SiIcons.SiCisco, color: "text-[#1BA0D7]" },
     "Sophos": { icon: Shield, color: "text-[#0078D4]" }, // Lucide fallback
     "Office 365": { icon: FaWindows, color: "text-[#D83B01]" },
+    "AnyDesk": { icon: SiIcons.SiAnydesk, color: "text-[#EF443B]" },
+    "ServiceNow": { icon: FaDesktop, color: "text-[#62D84E]" },
+    "Windows": { icon: FaWindows, color: "text-[#0078D6]" },
+    "MacOS": { icon: FaApple, color: "text-[#000000]" },
 
     // Marketing
     "Google Analytics": { icon: SiIcons.SiGoogleanalytics, color: "text-[#E37400]" },
@@ -147,6 +151,10 @@ const techMap = {
     "Nessus": { icon: Shield, color: "text-[#0078D4]" }, // Using Shield as generic secure icon
     "Burp Suite": { icon: SiIcons.SiBurpsuite, color: "text-[#FF6633]" },
     "AWS Security Hub": { icon: FaAws, color: "text-[#FF9900]" },
+    "Norton": { icon: SiIcons.SiNorton, color: "text-[#FFD200]" },
+    "Kali Linux": { icon: SiIcons.SiKalilinux, color: "text-[#557C94]" },
+    "BitLocker": { icon: FaLock, color: "text-[#0078D4]" },
+    "OpenSSL": { icon: SiIcons.SiOpenssl, color: "text-[#721412]" },
 
     // HR Tech
     "LinkedIn": { icon: SiIcons.SiLinkedin, color: "text-[#0A66C2]", size: 48 },
@@ -232,7 +240,10 @@ const techMap = {
     "RestAssured": { icon: FaFlask, color: "text-[#FF6C37]" },
     "AWS CodePipeline": { icon: FaAws, color: "text-[#FF9900]" },
     "AWS S3": { icon: FaAws, color: "text-[#FF9900]" },
-    "Jenkins": { icon: SiIcons.SiJenkins, color: "text-[#D24939]" }
+    "Jenkins": { icon: SiIcons.SiJenkins, color: "text-[#D24939]" },
+    "Git": { icon: SiIcons.SiGit, color: "text-[#F05032]" },
+    "Sentry": { icon: SiIcons.SiSentry, color: "text-[#362D59]" },
+    "SonarQube": { icon: SiIcons.SiSonarqube, color: "text-[#4E9BCD]" }
 };
 
 const themes = {

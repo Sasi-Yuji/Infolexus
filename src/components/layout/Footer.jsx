@@ -14,7 +14,7 @@ const Footer = () => {
             <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none" />
             <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-indigo-900/10 rounded-full blur-[100px] translate-y-1/2 pointer-events-none" />
 
-            <div className="w-full px-2 md:px-4 relative z-10">
+            <div className="w-full px-4 md:px-4 relative z-10">
 
                 <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-12 lg:gap-8 mb-16">
 
@@ -31,7 +31,7 @@ const Footer = () => {
                             <p className="text-slate-400 leading-relaxed mb-8">
                                 Infolexus is a premier technology partner <br /> delivering innovative IT solutions and strategic workforce management to global enterprises.
                             </p>
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 justify-center md:justify-start">
                                 {[
                                     { icon: Linkedin, href: "https://www.linkedin.com/company/infolexus-solutions/" },
                                     { icon: RiTwitterXFill, href: "https://x.com/InfolexusOff" },
@@ -90,7 +90,7 @@ const Footer = () => {
                     {/* Map Column (Span 3) - Added Right */}
                     <div className="col-span-2 lg:col-span-3">
                         <h4 className="text-white font-bold mb-6">Location</h4>
-                        <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-800 shadow-lg">
+                        <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-800 shadow-lg pr-4 md:pr-0">
                             <iframe
                                 title="Office Location"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.347263595567!2d76.9889976757065!3d11.006997092116035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859eb03584a43%3A0x32befeb42d4f385a!2sInfolexus%20Solutions!5e0!3m2!1sen!2sin!4v1713437292323!5m2!1sen!2sin"

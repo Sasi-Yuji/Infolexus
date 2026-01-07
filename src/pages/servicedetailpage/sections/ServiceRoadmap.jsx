@@ -35,32 +35,35 @@ const ServiceRoadmap = ({ service, variant = 'it' }) => {
     if (steps.length === 0) return null;
 
     return (
-        <div>
-            <div className="text-center mb-16">
-                <span className={`${theme.labelColor} font-bold tracking-widest uppercase text-xs mb-2 block`}>{theme.label}</span>
-                <h2 className="text-4xl font-black text-slate-900">Execution Roadmap</h2>
-            </div>
-            <div className="relative">
-                {/* Connecting Line */}
-                <div className={`absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 hidden md:block ${theme.lineColor}`}></div>
+        <div className="py-20 bg-gradient-to-b from-slate-50 to-white">
+            <div className="container mx-auto px-4">
+                <div className="text-center mb-16">
+                    <span className={`${theme.labelColor} font-bold tracking-widest uppercase text-xs mb-3 block`}>{theme.label}</span>
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900">Execution Roadmap</h2>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-                    {steps.map((step, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.2 }}
-                            className="relative bg-white p-8 rounded-3xl border border-slate-100 shadow-lg text-center group hover:-translate-y-2 transition-transform"
-                        >
-                            <div className={`w-10 h-10 mx-auto text-white rounded-full flex items-center justify-center font-bold mb-6 border-4 shadow-xl ${theme.numberBg}`}>
-                                {index + 1}
-                            </div>
-                            <h3 className="text-lg font-bold text-slate-900 mb-3">{step.title}</h3>
-                            <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
-                        </motion.div>
-                    ))}
+                <div className="max-w-7xl mx-auto relative">
+                    {/* Connecting Line - positioned at badge level */}
+                    <div className="absolute top-[80px] left-0 right-0 h-0.5 bg-gradient-to-r from-orange-200 via-orange-300 to-orange-200 hidden md:block" style={{ zIndex: 0 }}></div>
+
+                    <div className={`grid grid-cols-1 ${steps.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-4'} gap-6 md:gap-8 relative`} style={{ zIndex: 1 }}>
+                        {steps.map((step, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.15, duration: 0.5 }}
+                                className="relative bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-slate-100"
+                            >
+                                <div className="w-12 h-12 mx-auto rounded-full flex items-center justify-center font-bold text-lg mb-6 text-white shadow-lg bg-gradient-to-r from-orange-500 to-pink-500 relative z-10">
+                                    {index + 1}
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-3 text-center">{step.title}</h3>
+                                <p className="text-sm text-slate-600 leading-relaxed text-center">{step.desc}</p>
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
