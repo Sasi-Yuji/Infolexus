@@ -47,11 +47,12 @@ const Hero = () => {
                 <div className="pt-10 pb-4 max-w-4xl">
 
                     {/* Heading */}
-                    <div className="mb-8 drop-shadow-lg min-h-[160px] md:min-h-[120px]">
+                    {/* Heading */}
+                    <div className="mb-8 drop-shadow-lg md:min-h-[120px]">
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
                             Our Spectrum <br />
 
-                            <span className="text-blue-400 block h-[1.2em]">
+                            <span className="text-blue-400 block h-auto md:h-[1.2em]">
                                 <span className="text-white">in&nbsp;</span>
                                 <SplitText
                                     key={services[currentServiceIndex]}
