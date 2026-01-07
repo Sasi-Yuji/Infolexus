@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Cpu, Globe, Shield, BarChart, Mail, ClipboardCheck } from 'lucide-react';
+import { CheckCircle2, Cpu, Globe, Shield, BarChart, Mail, ClipboardCheck, Calendar } from 'lucide-react';
 import * as SiIcons from 'react-icons/si';
 
 
 
-import { FaAws, FaJava, FaWindows, FaBook, FaCogs, FaServer, FaRobot, FaChartBar, FaFileExcel, FaLink, FaChartLine, FaChartArea, FaPlayCircle, FaFlask, FaLock, FaApple, FaDesktop } from 'react-icons/fa';
+import { FaAws, FaJava, FaWindows, FaBook, FaCogs, FaServer, FaRobot, FaChartBar, FaFileExcel, FaLink, FaChartLine, FaChartArea, FaPlayCircle, FaFlask, FaLock, FaApple, FaDesktop, FaStar } from 'react-icons/fa';
 import { VscAzure } from 'react-icons/vsc';
 import { RiTwitterXFill } from 'react-icons/ri';
 import { Video } from 'lucide-react'; // Import Video icon for fallbacks
@@ -179,9 +179,9 @@ const techMap = {
     "Meta Business Suite": { icon: SiIcons.SiMeta, color: "text-[#0668E1]" },
     "CapCut": { icon: SiIcons.SiTiktok, color: "text-[#000000]" },
     "Buffer": { icon: SiIcons.SiBuffer, color: "text-[#231F20]" },
-    "Hootsuite": { icon: SiIcons.SiBuffer, color: "text-[#000000]" },
-    "Later": { icon: SiIcons.SiBuffer, color: "text-[#000000]" },
-    "Sprout Social": { icon: SiIcons.SiBuffer, color: "text-[#2DCC70]" },
+    "Hootsuite": { icon: SiIcons.SiHootsuite, color: "text-[#000000]" },
+    "Later": { icon: Calendar, color: "text-[#6C5CE7]" },
+    "Sprout Social": { icon: SiIcons.SiSproutsocial, color: "text-[#2DCC70]" },
     "Hotjar": { icon: SiIcons.SiHotjar, color: "text-[#FD3A5C]" },
     "Adobe Premiere": { icon: SiIcons.SiAdobepremierepro, color: "text-[#9999FF]" },
     "Premiere Pro": { icon: SiIcons.SiAdobepremierepro, color: "text-[#9999FF]" },
@@ -199,8 +199,8 @@ const techMap = {
     "X Ads": { icon: RiTwitterXFill, color: "text-[#000000]" },
     "LinkedIn Campaign Manager": { icon: SiIcons.SiLinkedin, color: "text-[#0A66C2]" },
     "Sales Navigator": { icon: SiIcons.SiLinkedin, color: "text-[#0A66C2]" },
-    "Yoast SEO": { icon: SiIcons.SiSemrush, color: "text-[#A03593]" },
-    "RankMath": { icon: SiIcons.SiSemrush, color: "text-[#F40056]" },
+    "Yoast SEO": { icon: SiIcons.SiYoast, color: "text-[#A03593]" },
+    "RankMath": { icon: FaStar, color: "text-[#F40056]" },
     "Ahrefs": { icon: FaLink, color: "text-[#0060FF]" },
     "Moz": { icon: FaChartLine, color: "text-[#8A2432]" },
     "BuzzSumo": { icon: FaChartArea, color: "text-[#000000]" },

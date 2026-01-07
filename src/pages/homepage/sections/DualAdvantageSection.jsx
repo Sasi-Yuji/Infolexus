@@ -39,20 +39,20 @@ const DualAdvantageSection = () => {
              WHY INFOLEXUS: DUAL ADVANTAGE
         ========================================
         */
-        <section id="our-services" className="py-24 bg-white overflow-hidden relative">
+        <section id="our-services" className="py-12 md:py-24 bg-white overflow-hidden relative">
             {/* Full Width Particles Background */}
             <div className="absolute inset-0 z-0">
                 <Particles particleCount={150} particleColor="rgba(15, 23, 42, 0.1)" lineColor="rgba(15, 23, 42, 0.05)" />
             </div>
 
             {/* Content Removed - Background Retained */}
-            <div className="container mx-auto px-6 relative z-10 py-16">
+            <div className="container mx-auto px-6 relative z-10 py-8 md:py-16">
                 {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center mb-8 md:mb-16"
                 >
                     <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight">
                         Architecting <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Digital Futures</span>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
-import itImage from '../../../assets/it-services-tech.png';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import aboutTeamImage from '../../../assets/about-team-collaboration.png';
 
 const WhoWeAre = () => {
     return (
@@ -34,15 +35,15 @@ const WhoWeAre = () => {
                         </div>
 
                         <div className="pt-4">
-                            <button className="group relative inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white font-medium rounded-full overflow-hidden transition-all duration-300 hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/30">
+                            <Link to="/clients" className="group relative inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white font-medium rounded-full overflow-hidden transition-all duration-300 hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/30">
                                 <span className="relative z-10 flex items-center gap-2">
-                                    Discover Our Story <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                                    Work We Deliver <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                                 </span>
-                            </button>
+                            </Link>
                         </div>
                     </motion.div>
 
-                    {/* Right Side: Video */}
+                    {/* Right Side: Professional Image */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -50,26 +51,16 @@ const WhoWeAre = () => {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="relative"
                     >
-                        {/* Video Container - Stylized as a premium video player */}
-                        <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-900/20 border-4 border-white aspect-video z-10 group cursor-pointer bg-slate-100">
-                            {/* Using Image as a Placeholder/Poster */}
+                        {/* Professional Team Collaboration Image */}
+                        <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-900/20 border-4 border-white z-10 group max-h-[500px]">
                             <img
-                                src={itImage}
-                                alt="Who We Are Video Thumbnail"
+                                src={aboutTeamImage}
+                                alt="Infolexus Team - Digital Transformation Experts"
                                 className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
                             />
 
-                            {/* Overlay Gradient */}
-                            <div className="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/40 transition-colors duration-300 mix-blend-multiply" />
-
-                            {/* Play Button Overlay */}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 shadow-xl group-hover:scale-110 transition-transform duration-300">
-                                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center pl-1 shadow-inner ring-4 ring-white/30">
-                                        <Play size={24} className="text-blue-600 fill-blue-600 ml-1" />
-                                    </div>
-                                </div>
-                            </div>
+                            {/* Subtle Overlay for depth */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent" />
                         </div>
 
                         {/* Decorative Background Elements */}

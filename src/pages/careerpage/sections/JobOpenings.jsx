@@ -54,7 +54,7 @@ const positions = [
         exp: "Freshers or 0–3 years",
         requirements: [
             "Strong understanding of Python programming",
-            "Knowledge of APIs, databases or frameworks (Django/Flask is a plus)",
+            "Knowledge of APIs, databases & frameworks (Django) and Flask is a plus",
             "Problem-solving & logical thinking"
         ]
     }
