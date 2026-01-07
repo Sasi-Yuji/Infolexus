@@ -245,7 +245,7 @@ const Navbar = () => {
             ]
         },
         {
-            title: 'Up Skill Program',
+            title: 'Upskilling Programs',
             description: 'Comprehensive training solutions tailored for institutions and individual career growth.',
             subCategories: [
                 {

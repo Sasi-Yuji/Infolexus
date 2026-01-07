@@ -306,10 +306,10 @@ const ProjectCard = ({ project, index }) => {
                     </div>
 
                     <a
-                        href={project.link}
+                        href="#consultation-form"
                         className="inline-flex items-center gap-2 text-brand-blue font-bold text-sm tracking-wide group hover:text-blue-700 transition-colors"
                     >
-                        VIEW CASE STUDY
+                        INQUIRE NOW
                         <ArrowRight size={16} className="transform transition-transform group-hover:translate-x-1" />
                     </a>
                 </div>
