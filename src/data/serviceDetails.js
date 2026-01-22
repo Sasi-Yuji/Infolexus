@@ -15,7 +15,7 @@ export const serviceDetails = {
     'ma-01': {
         title: "Mobile Application Development",
         subtitle: "Native & Cross-Platform Excellence for the Mobile-First Era",
-        description: "In a world where mobile traffic dominates, your app is often the primary touchpoint for your customers. We don't just build apps; we engineer mobile experiences that are intuitive, engaging, and performant. Whether you need a high-performance native application for iOS and Android or a cost-effective cross-platform solution using Flutter or React Native, our team delivers pixel-perfect code. We handle the entire lifecycle from concept validation and UX prototyping to App Store submission and post-launch maintenance, ensuring your app scales with your user base.",
+        description: "In a world where mobile traffic dominates, your app is often the primary touchpoint for your customers. We don't just build apps. We engineer mobile experiences that are intuitive, engaging, and performant. Whether you need a high-performance native application for iOS and Android or a cost-effective cross-platform solution using Flutter or React Native, our team delivers pixel-perfect code. We handle the entire lifecycle from concept validation and UX prototyping to App Store submission and post-launch maintenance, ensuring your app scales with your user base.",
         features: [
             "Native iOS Development (Swift, SwiftUI)",
             "Native Android Development (Kotlin, Jetpack Compose)",

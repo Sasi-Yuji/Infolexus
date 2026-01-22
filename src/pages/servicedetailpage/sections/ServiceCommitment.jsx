@@ -5,7 +5,7 @@ const ServiceCommitment = () => {
     const commitments = [
         {
             title: "Expert Consultation",
-            description: "We don't just write code; we provide strategic guidance on technology selection, architecture, and long-term scalability to ensure your investment pays off.",
+            description: "We don't just write code. We provide strategic guidance on technology selection, architecture, and long-term scalability to ensure your investment pays off.",
         },
         {
             title: "Agile Development Methodology",
