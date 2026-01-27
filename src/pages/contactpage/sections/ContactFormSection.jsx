@@ -22,44 +22,45 @@ const ContactFormSection = () => {
         setIsSubmitting(true);
         setSubmitStatus(null);
 
-        // Using FormSubmit.co
-        const endpoint = "https://formsubmit.co/ajax/kumarsasi9081@gmail.com";
+        // Using our backend endpoint
+        const endpoint = "/send-application";
 
         try {
+            const formDataToSend = new FormData();
+            formDataToSend.append('name', formData.name);
+            formDataToSend.append('email', formData.email);
+            formDataToSend.append('phone', ''); // Contact form doesn't have phone
+            formDataToSend.append('position', 'Contact Us Inquiry');
+            formDataToSend.append('subject', formData.subject);
+            formDataToSend.append('message', formData.message);
+            formDataToSend.append('recipientType', 'mani'); // Route to mani@infolexus.com
+
             const response = await fetch(endpoint, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    _subject: `New Contact Inquiry: ${formData.subject} [${new Date().toLocaleString()}]`,
-                    name: formData.name,
-                    email: formData.email,
-                    subject: formData.subject,
-                    message: formData.message,
-                    _template: 'table', // FormSubmit formats it nicely in a table
-                    _captcha: "false", // Disable captcha for easier testing
-                    _autoresponse: "Thank you for contacting Infolexus. We have received your message and will get back to you shortly."
-                })
+                body: formDataToSend
             });
 
             if (response.ok) {
-                setSubmitStatus('success');
-                setIsSubmitting(false);
-                setFormData({
-                    name: '',
-                    email: '',
-                    subject: '',
-                    message: ''
-                });
-                // Reset status after 5 seconds
-                setTimeout(() => setSubmitStatus(null), 5000);
+                const result = await response.json();
+                if (result.success) {
+                    setSubmitStatus('success');
+                    setIsSubmitting(false);
+                    setFormData({
+                        name: '',
+                        email: '',
+                        subject: '',
+                        message: ''
+                    });
+                    // Reset status after 5 seconds
+                    setTimeout(() => setSubmitStatus(null), 5000);
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
             } else {
-                throw new Error('Submission failed');
+                throw new Error('Server error');
             }
-        } catch {
-            // console.error('Failed to send email:');
+        } catch (error) {
+            console.error('Submission Error:', error);
             setSubmitStatus('error');
             setIsSubmitting(false);
         }

@@ -49,6 +49,7 @@ const ApplicationForm = () => {
             formDataToSend.append('experienceLevel', formData.experienceLevel);
             if (formData.yearsOfExperience) formDataToSend.append('yearsOfExperience', formData.yearsOfExperience);
             formDataToSend.append('message', formData.message);
+            formDataToSend.append('recipientType', 'mani'); // Route to mani@infolexus.com
 
             // Append File
             if (resumeFile) {

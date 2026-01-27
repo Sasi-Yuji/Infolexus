@@ -21,9 +21,9 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
         customYear: '',
         course: '',
         customCourse: '',
-        learningMode: 'Online', // Default
         currentStatus: 'Fresher', // Default
-        experience: '',
+        yearsOfExperience: '',
+        skills: '',
 
         // Recruitment Specific
         companyName: '',
@@ -59,10 +59,15 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
                 formDataToSend.append('College', formData.college);
                 formDataToSend.append('Degree', formData.degree === 'Others' ? formData.customDegree : formData.degree);
                 formDataToSend.append('PassingYear', formData.year === 'Others' ? formData.customYear : formData.year);
-                formDataToSend.append('InterestedCourse', formData.course === 'Others' ? formData.customCourse : formData.course);
-                formDataToSend.append('LearningMode', formData.learningMode);
+                formDataToSend.append('InterestedDomain', formData.course === 'Others' ? formData.customCourse : formData.course);
                 formDataToSend.append('CurrentStatus', formData.currentStatus);
-                formDataToSend.append('ExperienceDetails', formData.experience);
+                if (formData.currentStatus === 'Experienced' && formData.yearsOfExperience) {
+                    formDataToSend.append('YearsOfExperience', formData.yearsOfExperience);
+                }
+                if (formData.skills) {
+                    formDataToSend.append('Skills', formData.skills);
+                }
+                formDataToSend.append('recipientType', 'mani'); // Route to mani@infolexus.com
 
                 if (resumeFile) {
                     formDataToSend.append('attachment', resumeFile);
@@ -89,36 +94,34 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
                 }
 
             } else {
-                // Keep original behavior for Recruitment or others
-                let submissionData = {
-                    _subject: `New Inquiry (${type === 'placement' ? 'Placement Support' : 'Recruitment'})`,
-                    name: formData.name,
-                    mobile: formData.mobile,
-                    email: formData.email,
-                    companyName: formData.companyName,
-                    requirementType: formData.requirementType,
-                    message: formData.message,
-                    _template: 'table',
-                    _captcha: 'false',
-                    _autoresponse: "Thank you for enquiring with Infolexus. We'll be in touch shortly."
-                };
+                // Recruitment - use our backend
+                const formDataToSend = new FormData();
+                formDataToSend.append('name', formData.name);
+                formDataToSend.append('email', formData.email);
+                formDataToSend.append('phone', formData.mobile);
+                formDataToSend.append('position', 'Recruitment Inquiry');
+                formDataToSend.append('CompanyName', formData.companyName);
+                formDataToSend.append('RequirementType', formData.requirementType);
+                formDataToSend.append('message', formData.message);
+                formDataToSend.append('recipientType', 'support'); // Route to support@infolexus.com
 
-                const response = await fetch("https://formsubmit.co/ajax/support@infolexus.com", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(submissionData)
+                const response = await fetch('/send-application', {
+                    method: 'POST',
+                    body: formDataToSend
                 });
 
                 if (response.ok) {
-                    setSubmitStatus('success');
-                    setTimeout(() => {
-                        closeAndReset();
-                    }, 2000);
+                    const result = await response.json();
+                    if (result.success) {
+                        setSubmitStatus('success');
+                        setTimeout(() => {
+                            closeAndReset();
+                        }, 2000);
+                    } else {
+                        throw new Error(result.message);
+                    }
                 } else {
-                    setSubmitStatus('error');
+                    throw new Error('Server error');
                 }
             }
         } catch (error) {
@@ -136,7 +139,7 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
         setFormData({
             name: '', mobile: '', email: '', college: '', degree: '', customDegree: '',
             year: '', customYear: '', course: '', customCourse: '',
-            learningMode: 'Online', currentStatus: 'Fresher', experience: '',
+            currentStatus: 'Fresher', yearsOfExperience: '', skills: '',
             companyName: '', requirementType: '', message: ''
         });
     };
@@ -278,48 +281,50 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
                                             </div>
 
                                             <div className="space-y-1">
-                                                <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Interested Course / Domain</label>
+                                                <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Interested Domain</label>
                                                 <select
                                                     name="course" required value={formData.course} onChange={handleChange}
                                                     className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm bg-white"
                                                 >
-                                                    <option value="">Select Course</option>
+                                                    <option value="">Select Domain</option>
                                                     {courses.map(c => <option key={c} value={c}>{c}</option>)}
                                                 </select>
                                                 {formData.course === 'Others' && (
                                                     <input
                                                         name="customCourse" value={formData.customCourse} onChange={handleChange}
-                                                        placeholder="Specify Course" className="mt-2 w-full px-4 py-2 rounded-lg border text-sm"
+                                                        placeholder="Specify Domain" className="mt-2 w-full px-4 py-2 rounded-lg border text-sm"
                                                     />
                                                 )}
                                             </div>
 
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                <div className="space-y-2">
-                                                    <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Learning Mode</label>
-                                                    <div className="flex gap-4">
-                                                        <label className="flex items-center gap-2 text-sm cursor-pointer">
-                                                            <input type="radio" name="learningMode" value="Online" checked={formData.learningMode === 'Online'} onChange={handleChange} className="text-blue-600" />
-                                                            Online
+                                            <div className="space-y-1">
+                                                <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Current Status</label>
+                                                <div className="flex gap-4">
+                                                    {['Fresher', 'Experienced'].map(status => (
+                                                        <label key={status} className="flex items-center gap-2 text-sm cursor-pointer">
+                                                            <input type="radio" name="currentStatus" value={status} checked={formData.currentStatus === status} onChange={handleChange} className="text-blue-600" />
+                                                            {status}
                                                         </label>
-                                                        <label className="flex items-center gap-2 text-sm cursor-pointer">
-                                                            <input type="radio" name="learningMode" value="Offline" checked={formData.learningMode === 'Offline'} onChange={handleChange} className="text-blue-600" />
-                                                            Offline
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="space-y-2">
-                                                    <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Current Status</label>
-                                                    <div className="flex flex-wrap gap-4">
-                                                        {['Fresher', 'Job Seeker', 'Working'].map(status => (
-                                                            <label key={status} className="flex items-center gap-2 text-sm cursor-pointer">
-                                                                <input type="radio" name="currentStatus" value={status} checked={formData.currentStatus === status} onChange={handleChange} className="text-blue-600" />
-                                                                {status}
-                                                            </label>
-                                                        ))}
-                                                    </div>
+                                                    ))}
                                                 </div>
                                             </div>
+
+                                            {/* Conditional Years of Experience */}
+                                            {formData.currentStatus === 'Experienced' && (
+                                                <div className="space-y-1">
+                                                    <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Years of Experience</label>
+                                                    <input
+                                                        type="number"
+                                                        name="yearsOfExperience"
+                                                        value={formData.yearsOfExperience}
+                                                        onChange={handleChange}
+                                                        placeholder="e.g., 2"
+                                                        min="0"
+                                                        step="0.5"
+                                                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm"
+                                                    />
+                                                </div>
+                                            )}
 
                                             {/* Resume Upload - Only for Placement */}
                                             <div className="space-y-2 border-t border-dashed pt-4 mt-2">
@@ -339,11 +344,11 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
                                             </div>
 
                                             <div className="space-y-1">
-                                                <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Any Experience or Project? <span className="text-slate-400 normal-case font-normal">(Optional)</span></label>
+                                                <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Skills <span className="text-slate-400 normal-case font-normal">(Optional)</span></label>
                                                 <textarea
-                                                    name="experience" value={formData.experience} onChange={handleChange}
+                                                    name="skills" value={formData.skills} onChange={handleChange}
                                                     className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm resize-none h-20"
-                                                    placeholder="Briefly describe any relevant experience or projects"
+                                                    placeholder="e.g., Python, React, Communication, Problem-solving"
                                                 />
                                             </div>
                                         </>

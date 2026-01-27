@@ -13,6 +13,8 @@ import crmMobileImg from '../../../assets/CRM-mobile.jpeg';
 import hrImg from '../../../assets/HRM.png';
 import hrTabImg from '../../../assets/HRm-TAB.jpeg';
 import hrMobileImg from '../../../assets/HRM-MOBILE.jpeg';
+import erpEngImg from '../../../assets/ERP-ENG.png';
+import erpCpImg from '../../../assets/ERP-CP.png';
 import soapNotesImg from '../../../assets/soap_notes.png';
 import soapNotesVideo from '../../../assets/SOAP Notes Generator.mp4';
 import voiceDoctorVideo from '../../../assets/voice-booking.mp4';
@@ -92,6 +94,22 @@ const projects = [
         link: '#'
     },
     {
+        id: 3,
+        title: 'Construction ERP',
+        category: 'Construction / ERP-CRM',
+        description: 'A comprehensive Enterprise Resource Planning solution tailored for construction companies. Streamline project management, track assets, manage vendors, monitor site progress, and gain real-time insights with powerful analytics. Built to handle the unique complexities of construction workflows with precision and efficiency.',
+        stack: ['React', 'Python', 'NumPy', 'Pandas', 'Tailwind', 'PostgreSQL'],
+        image: {
+            desktop: erpEngImg,
+            tablet: { src: erpEngImg, className: 'scale-125' },
+            laptop: erpCpImg,
+            mobile: { src: erpCpImg, className: 'scale-150' }
+        },
+        accent: 'text-orange-500',
+        bgAccent: 'bg-orange-500/10',
+        link: '#'
+    },
+    {
         id: 5,
         title: 'Deploynix',
         category: 'HR Tech / Job Portal',
@@ -133,6 +151,10 @@ const MultiDeviceMockup = ({ image, video }) => {
 
     const desktopRaw = isMultiImage ? image.desktop : image;
     const desktopSrc = typeof desktopRaw === 'object' && desktopRaw.src ? desktopRaw.src : desktopRaw;
+
+    // Laptop image - use laptop if provided, otherwise use desktop
+    const laptopRaw = isMultiImage ? (image.laptop || image.desktop) : image;
+    const laptopSrc = typeof laptopRaw === 'object' && laptopRaw.src ? laptopRaw.src : laptopRaw;
 
     const tabletRaw = isMultiImage ? (image.tablet || image.mobile) : image;
     const tabletData = resolveImage(tabletRaw);
@@ -186,7 +208,7 @@ const MultiDeviceMockup = ({ image, video }) => {
                                 <video src={video} className="w-full h-full object-cover object-top" autoPlay loop muted playsInline />
                             ) : (
                                 <img
-                                    src={desktopSrc}
+                                    src={laptopSrc}
                                     alt="Laptop"
                                     className="w-full h-full object-cover object-top will-change-transform"
                                     style={{ imageRendering: 'high-quality', backfaceVisibility: 'hidden' }}

@@ -1,18 +1,42 @@
 import React, { useState } from 'react';
 import { Send, Loader2 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 const ServiceInquiryForm = ({ id, variant = 'default' }) => {
+    const location = useLocation();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
 
+    // Determine service type based on URL
+    const isDigitalMarketing = location.pathname.includes('/dm-services');
+    const isITServices = location.pathname.includes('/services') && !location.pathname.includes('/dm-services');
+
+    // User type for upskilling form (job-seeker variant)
+    const [userType, setUserType] = useState('job-seeker'); // job-seeker | college | company
+
     const [formData, setFormData] = useState({
-        // Common
+        // Common fields
         name: '',
         email: '',
         phone: '',
-        location: '',
 
-        // Business / Default
+        // Job Seeker specific
+        interestedCourse: '',
+        learningMode: '',
+        message: '',
+
+        // College specific
+        instituteName: '',
+        studentCount: '',
+        trainingDomain: '',
+
+        // Company specific
+        companyName: '',
+        employeeCount: '',
+        trainingType: '',
+
+        // Keep existing fields for default/other forms
+        location: '',
         company: '',
         role: '',
         orgType: '',
@@ -21,20 +45,13 @@ const ServiceInquiryForm = ({ id, variant = 'default' }) => {
         assistanceOther: '',
         howDidYouHear: '',
         howDidYouHearOther: '',
-
-        // Job Seeker / Upskilling
         collegeName: '',
         degree: '',
         yearOfPassing: '',
         interest: '',
-        learningMode: '',
         currentStatus: '',
         experienceDetails: '',
         preferredTime: '',
-
-        // College
-        instituteName: '',
-        studentCount: '',
         programType: ''
     });
 
@@ -47,51 +64,76 @@ const ServiceInquiryForm = ({ id, variant = 'default' }) => {
         setIsSubmitting(true);
         setSubmitStatus(null);
 
-        // Using FormSubmit.co
-        const endpoint = "https://formsubmit.co/ajax/support@infolexus.com";
+        // Using our backend endpoint
+        const endpoint = "/send-application";
 
-        // Construct Subject based on variant
-        let emailSubject = 'New Inquiry';
-        if (variant === 'job-seeker') emailSubject = `Course Registration: ${formData.name}`;
-        else if (variant === 'college') emailSubject = `College Partnership Inquiry: ${formData.instituteName}`;
-        else emailSubject = `Service Inquiry: ${formData.company}`;
+        // Construct Subject and position based on variant and userType
+        let position = 'Service Inquiry';
+        if (variant === 'job-seeker') {
+            if (userType === 'job-seeker') position = `Training Inquiry - Job Seeker: ${formData.name}`;
+            else if (userType === 'college') position = `Training Inquiry - College: ${formData.instituteName}`;
+            else if (userType === 'company') position = `Training Inquiry - Company: ${formData.companyName}`;
+        }
+        else if (variant === 'college') position = `College Partnership Inquiry: ${formData.instituteName}`;
+        else position = `Service Inquiry: ${formData.company}`;
 
         try {
+            const formDataToSend = new FormData();
+            formDataToSend.append('name', formData.name);
+            formDataToSend.append('email', formData.email);
+            formDataToSend.append('phone', formData.phone);
+            formDataToSend.append('position', position);
+            formDataToSend.append('recipientType', 'support'); // Route to support@infolexus.com
+
+            // Add userType for job-seeker variant
+            if (variant === 'job-seeker') {
+                formDataToSend.append('userType', userType);
+            }
+
+            // Add all other fields
+            Object.entries(formData).forEach(([key, value]) => {
+                if (!['name', 'email', 'phone'].includes(key) && value) {
+                    // Handle 'Other' fields logic
+                    if (key === 'orgType' && value === 'Other') {
+                        formDataToSend.append('orgType', formData.orgTypeOther || value);
+                    } else if (key === 'howDidYouHear' && value === 'Other') {
+                        formDataToSend.append('howDidYouHear', formData.howDidYouHearOther || value);
+                    } else if (key === 'assistance' && value === 'Other') {
+                        formDataToSend.append('assistance', formData.assistanceOther || value);
+                    } else if (!['orgTypeOther', 'howDidYouHearOther', 'assistanceOther'].includes(key)) {
+                        formDataToSend.append(key, value);
+                    }
+                }
+            });
+
             const response = await fetch(endpoint, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    _subject: emailSubject,
-                    ...formData,
-                    // Handle 'Other' fields logic if mostly for Default
-                    orgType: formData.orgType === 'Other' ? formData.orgTypeOther : formData.orgType,
-                    howDidYouHear: formData.howDidYouHear === 'Other' ? formData.howDidYouHearOther : formData.howDidYouHear,
-                    assistance: formData.assistance === 'Other' ? formData.assistanceOther : formData.assistance,
-
-                    // Metadata
-                    _template: 'table',
-                    _captcha: "false",
-                    _autoresponse: "Thank you for contacting Infolexus. We have received your inquiry and will get back to you shortly."
-                })
+                body: formDataToSend
             });
 
             if (response.ok) {
-                setSubmitStatus('success');
-                setIsSubmitting(false);
-                setFormData({
-                    name: '', email: '', phone: '', location: '', company: '', role: '',
-                    orgType: '', assistance: '', orgTypeOther: '', assistanceOther: '',
-                    howDidYouHear: '', howDidYouHearOther: '', collegeName: '', degree: '',
-                    yearOfPassing: '', interest: '', learningMode: '', currentStatus: '',
-                    experienceDetails: '', preferredTime: '', instituteName: '',
-                    studentCount: '', programType: ''
-                });
-                setTimeout(() => setSubmitStatus(null), 5000);
+                const result = await response.json();
+                if (result.success) {
+                    setSubmitStatus('success');
+                    setIsSubmitting(false);
+                    // Reset form to MVP structure
+                    setFormData({
+                        name: '', email: '', phone: '',
+                        interestedCourse: '', learningMode: '', message: '',
+                        instituteName: '', studentCount: '', trainingDomain: '',
+                        companyName: '', employeeCount: '', trainingType: '',
+                        // Keep legacy fields for other forms
+                        location: '', company: '', role: '', orgType: '', assistance: '',
+                        orgTypeOther: '', assistanceOther: '', howDidYouHear: '', howDidYouHearOther: '',
+                        collegeName: '', degree: '', yearOfPassing: '', interest: '',
+                        currentStatus: '', experienceDetails: '', preferredTime: '', programType: ''
+                    });
+                    setTimeout(() => setSubmitStatus(null), 5000);
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
             } else {
-                throw new Error('Submission failed');
+                throw new Error('Server error');
             }
         } catch (error) {
             console.error(error);
@@ -131,130 +173,190 @@ const ServiceInquiryForm = ({ id, variant = 'default' }) => {
 
                     <form onSubmit={handleSubmit} className={variant === 'job-seeker' ? "grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6" : "grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6"}>
 
-                        {/* ================= JOB SEEKER FORM ================= */}
+                        {/* ================= DYNAMIC MVP UPSKILLING FORM ================= */}
                         {variant === 'job-seeker' && (
                             <>
-                                {/* Row 1 */}
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Full Name <span className="text-red-500">*</span></label>
-                                    <input type="text" name="name" required placeholder="Enter Your Name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Mobile Number <span className="text-red-500">*</span></label>
-                                    <div className="flex">
-                                        <span className="inline-flex items-center px-3 bg-slate-100 border border-r-0 border-slate-200 rounded-l-lg text-slate-500 text-sm">🇮🇳 +91</span>
-                                        <input type="tel" name="phone" required placeholder="98765 43210" value={formData.phone} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-r-lg focus:border-blue-500 outline-none" />
-                                    </div>
-                                </div>
-
-                                {/* Row 2 */}
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Email ID <span className="text-red-500">*</span></label>
-                                    <input type="email" name="email" required placeholder="email@example.com" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">College Name <span className="text-red-500">*</span></label>
-                                    <input type="text" name="collegeName" required placeholder="Enter College Name" value={formData.collegeName} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
-                                </div>
-
-                                {/* Row 3 */}
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Degree <span className="text-red-500">*</span></label>
-                                    <select name="degree" required value={formData.degree} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
-                                        <option value="">- Select -</option>
-                                        <option value="BE / BTech">BE / BTech</option>
-                                        <option value="BSc">BSc</option>
-                                        <option value="BCA">BCA</option>
-                                        <option value="MCA">MCA</option>
-                                        <option value="MSc">MSc</option>
-                                        <option value="MBA">MBA</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Year of Passing <span className="text-red-500">*</span></label>
-                                    <select name="yearOfPassing" required value={formData.yearOfPassing} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
-                                        <option value="">- Select -</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                        <option value="Other">Other</option>
+                                {/* User Type Selector - Always First */}
+                                <div className="md:col-span-2 mb-4">
+                                    <label className="block text-sm font-bold text-slate-700 mb-1">I AM A <span className="text-red-500">*</span></label>
+                                    <select
+                                        value={userType}
+                                        onChange={(e) => setUserType(e.target.value)}
+                                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none"
+                                        required
+                                    >
+                                        <option value="job-seeker">Job Seeker</option>
+                                        <option value="college">College / Institution</option>
+                                        <option value="company">Company / Employee</option>
                                     </select>
                                 </div>
 
-                                {/* Row 4 */}
-                                <div className="md:col-span-2">
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Interested Course / Domain <span className="text-red-500">*</span></label>
-                                    <select name="interest" required value={formData.interest} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
-                                        <option value="">- Select Course -</option>
-                                        <option value="Full Stack Development">Full Stack Development</option>
-                                        <option value="Python">Python</option>
-                                        <option value="Java">Java</option>
-                                        <option value="Frontend (React)">Frontend (React)</option>
-                                        <option value="Data Science">Data Science</option>
-                                        <option value="AI / Machine Learning">AI / Machine Learning</option>
-                                        <option value="Cloud / DevOps">Cloud / DevOps</option>
-                                    </select>
-                                </div>
+                                {/* JOB SEEKER FIELDS */}
+                                {userType === 'job-seeker' && (
+                                    <>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Full Name <span className="text-red-500">*</span></label>
+                                            <input type="text" name="name" required placeholder="Enter your name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Phone <span className="text-red-500">*</span></label>
+                                            <div className="flex">
+                                                <span className="inline-flex items-center px-3 bg-slate-100 border border-r-0 border-slate-200 rounded-l-lg text-slate-500 text-sm">🇮🇳 +91</span>
+                                                <input type="tel" name="phone" required placeholder="98765 43210" value={formData.phone} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-r-lg focus:border-blue-500 outline-none" />
+                                            </div>
+                                        </div>
 
-                                {/* Row 5 - Radios */}
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-2">Learning Mode <span className="text-red-500">*</span></label>
-                                    <div className="flex gap-4">
-                                        <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                                            <input type="radio" name="learningMode" value="Online" checked={formData.learningMode === 'Online'} onChange={handleChange} className="w-4 h-4 text-blue-600" required /> Online
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                                            <input type="radio" name="learningMode" value="Offline" checked={formData.learningMode === 'Offline'} onChange={handleChange} className="w-4 h-4 text-blue-600" /> Offline
-                                        </label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-2">Current Status <span className="text-red-500">*</span></label>
-                                    <div className="flex gap-4 flex-wrap">
-                                        <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                                            <input type="radio" name="currentStatus" value="Fresher" checked={formData.currentStatus === 'Fresher'} onChange={handleChange} className="w-4 h-4 text-blue-600" required /> Fresher
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                                            <input type="radio" name="currentStatus" value="Job Seeker" checked={formData.currentStatus === 'Job Seeker'} onChange={handleChange} className="w-4 h-4 text-blue-600" /> Job Seeker
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                                            <input type="radio" name="currentStatus" value="Working Professional" checked={formData.currentStatus === 'Working Professional'} onChange={handleChange} className="w-4 h-4 text-blue-600" /> Professional
-                                        </label>
-                                    </div>
-                                </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Email <span className="text-red-500">*</span></label>
+                                            <input type="email" name="email" required placeholder="email@example.com" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Interested Course <span className="text-red-500">*</span></label>
+                                            <select name="interestedCourse" required value={formData.interestedCourse} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
+                                                <option value="">- Select Course -</option>
+                                                <option value="Full Stack Development">Full Stack Development</option>
+                                                <option value="Python Programming">Python Programming</option>
+                                                <option value="Java Programming">Java Programming</option>
+                                                <option value="Data Science">Data Science</option>
+                                                <option value="AI & Machine Learning">AI & Machine Learning</option>
+                                                <option value="Cloud Computing">Cloud Computing</option>
+                                                <option value="Mobile Development">Mobile Development</option>
+                                                <option value="Digital Marketing">Digital Marketing</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
 
-                                {/* Row 6 */}
-                                <div className="md:col-span-2">
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Any Experience or Project? (Optional)</label>
-                                    <input type="text" name="experienceDetails" placeholder="Briefly describe any experience or project" value={formData.experienceDetails} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
-                                </div>
+                                        <div className="md:col-span-2">
+                                            <label className="block text-sm font-bold text-slate-700 mb-2">Learning Mode <span className="text-red-500">*</span></label>
+                                            <div className="flex gap-6">
+                                                <label className="flex items-center gap-2 cursor-pointer text-slate-700">
+                                                    <input type="radio" name="learningMode" value="Online" checked={formData.learningMode === 'Online'} onChange={handleChange} className="w-4 h-4 text-blue-600" required /> Online
+                                                </label>
+                                                <label className="flex items-center gap-2 cursor-pointer text-slate-700">
+                                                    <input type="radio" name="learningMode" value="Offline" checked={formData.learningMode === 'Offline'} onChange={handleChange} className="w-4 h-4 text-blue-600" /> Offline
+                                                </label>
+                                            </div>
+                                        </div>
 
-                                {/* Row 7 */}
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Preferred Contact Time <span className="text-red-500">*</span></label>
-                                    <select name="preferredTime" required value={formData.preferredTime} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
-                                        <option value="">- Select -</option>
-                                        <option value="Morning">Morning</option>
-                                        <option value="Afternoon">Afternoon</option>
-                                        <option value="Evening">Evening</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">How did you hear about us? <span className="text-red-500">*</span></label>
-                                    <select name="howDidYouHear" required value={formData.howDidYouHear} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
-                                        <option value="">- Select -</option>
-                                        <option value="Friend">Friend</option>
-                                        <option value="Instagram">Instagram</option>
-                                        <option value="LinkedIn">LinkedIn</option>
-                                        <option value="College">College</option>
-                                        <option value="Website">Website</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
+                                        <div className="md:col-span-2">
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Message / Requirements <span className="text-slate-400 text-xs">(Optional)</span></label>
+                                            <textarea name="message" placeholder="Tell us about your learning goals..." value={formData.message} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none resize-none h-24"></textarea>
+                                        </div>
+                                    </>
+                                )}
+
+                                {/* COLLEGE FIELDS */}
+                                {userType === 'college' && (
+                                    <>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Full Name <span className="text-red-500">*</span></label>
+                                            <input type="text" name="name" required placeholder="Contact person name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Phone <span className="text-red-500">*</span></label>
+                                            <div className="flex">
+                                                <span className="inline-flex items-center px-3 bg-slate-100 border border-r-0 border-slate-200 rounded-l-lg text-slate-500 text-sm">🇮🇳 +91</span>
+                                                <input type="tel" name="phone" required placeholder="98765 43210" value={formData.phone} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-r-lg focus:border-blue-500 outline-none" />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Email <span className="text-red-500">*</span></label>
+                                            <input type="email" name="email" required placeholder="email@example.com" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Institution Name <span className="text-red-500">*</span></label>
+                                            <input type="text" name="instituteName" required placeholder="College or institution name" value={formData.instituteName} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Student Count <span className="text-red-500">*</span></label>
+                                            <select name="studentCount" required value={formData.studentCount} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
+                                                <option value="">- Select Count -</option>
+                                                <option value="10-30">10-30 students</option>
+                                                <option value="30-50">30-50 students</option>
+                                                <option value="50-100">50-100 students</option>
+                                                <option value="100-200">100-200 students</option>
+                                                <option value="200+">200+ students</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Training Domain <span className="text-red-500">*</span></label>
+                                            <select name="trainingDomain" required value={formData.trainingDomain} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
+                                                <option value="">- Select Domain -</option>
+                                                <option value="Full Stack Development">Full Stack Development</option>
+                                                <option value="Python Programming">Python Programming</option>
+                                                <option value="Java Programming">Java Programming</option>
+                                                <option value="Data Science & AI">Data Science & AI</option>
+                                                <option value="Soft Skills Training">Soft Skills Training</option>
+                                                <option value="Placement Training">Placement Training</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="md:col-span-2">
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Message / Requirements <span className="text-slate-400 text-xs">(Optional)</span></label>
+                                            <textarea name="message" placeholder="Any specific requirements or goals..." value={formData.message} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none resize-none h-24"></textarea>
+                                        </div>
+                                    </>
+                                )}
+
+                                {/* COMPANY FIELDS */}
+                                {userType === 'company' && (
+                                    <>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Full Name <span className="text-red-500">*</span></label>
+                                            <input type="text" name="name" required placeholder="Contact person name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Phone <span className="text-red-500">*</span></label>
+                                            <div className="flex">
+                                                <span className="inline-flex items-center px-3 bg-slate-100 border border-r-0 border-slate-200 rounded-l-lg text-slate-500 text-sm">🇮🇳 +91</span>
+                                                <input type="tel" name="phone" required placeholder="98765 43210" value={formData.phone} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-r-lg focus:border-blue-500 outline-none" />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Email <span className="text-red-500">*</span></label>
+                                            <input type="email" name="email" required placeholder="email@example.com" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Company Name <span className="text-red-500">*</span></label>
+                                            <input type="text" name="companyName" required placeholder="Your company name" value={formData.companyName} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Employee Count <span className="text-red-500">*</span></label>
+                                            <select name="employeeCount" required value={formData.employeeCount} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
+                                                <option value="">- Select Count -</option>
+                                                <option value="1-10">1-10 employees</option>
+                                                <option value="10-25">10-25 employees</option>
+                                                <option value="25-50">25-50 employees</option>
+                                                <option value="50-100">50-100 employees</option>
+                                                <option value="100+">100+ employees</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Training Type <span className="text-red-500">*</span></label>
+                                            <select name="trainingType" required value={formData.trainingType} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
+                                                <option value="">- Select Type -</option>
+                                                <option value="Technical Upskilling">Technical Upskilling</option>
+                                                <option value="Soft Skills & Leadership">Soft Skills & Leadership</option>
+                                                <option value="Digital Marketing">Digital Marketing</option>
+                                                <option value="Cyber Security">Cyber Security</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="md:col-span-2">
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Message / Requirements <span className="text-slate-400 text-xs">(Optional)</span></label>
+                                            <textarea name="message" placeholder="Tell us about your training objectives..." value={formData.message} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none resize-none h-24"></textarea>
+                                        </div>
+                                    </>
+                                )}
                             </>
                         )}
+
 
                         {/* ================= COLLEGE FORM ================= */}
                         {variant === 'college' && (
@@ -359,12 +461,57 @@ const ServiceInquiryForm = ({ id, variant = 'default' }) => {
                                     <div>
                                         <label className="block text-sm font-bold text-slate-700 mb-1">Assistance required for <span className="text-red-500">*</span></label>
                                         <select name="assistance" required value={formData.assistance} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none appearance-none">
-                                            <option value="">- Select -</option>
-                                            <option value="Mobile App Dev">Mobile App Development</option>
-                                            <option value="Web Development">Web Development</option>
-                                            <option value="Cyber Security">Cyber Security</option>
-                                            <option value="Staffing">Staffing</option>
-                                            <option value="IT Support">IT Support</option>
+                                            <option value="">- Select Service -</option>
+
+                                            {isITServices && (
+                                                <>
+                                                    <option value="Web Development">Web Development</option>
+                                                    <option value="Mobile App Development">Mobile App Development</option>
+                                                    <option value="Enterprise Solutions">Enterprise Solutions</option>
+                                                    <option value="Cloud Services">Cloud Services</option>
+                                                    <option value="Cyber Security">Cyber Security</option>
+                                                    <option value="IT Support & Maintenance">IT Support & Maintenance</option>
+                                                </>
+                                            )}
+
+                                            {isDigitalMarketing && (
+                                                <>
+                                                    <option value="SEO (Search Engine Optimization)">SEO (Search Engine Optimization)</option>
+                                                    <option value="SMM (Social Media Marketing)">SMM (Social Media Marketing)</option>
+                                                    <option value="PPC (Pay-Per-Click)">PPC (Pay-Per-Click)</option>
+                                                    <option value="Content Marketing">Content Marketing</option>
+                                                    <option value="Email Marketing">Email Marketing</option>
+                                                    <option value="Brand Strategy">Brand Strategy</option>
+                                                </>
+                                            )}
+
+                                            {!isITServices && !isDigitalMarketing && (
+                                                <>
+                                                    <optgroup label="IT Services">
+                                                        <option value="Web Development">Web Development</option>
+                                                        <option value="Mobile App Development">Mobile App Development</option>
+                                                        <option value="Enterprise Solutions">Enterprise Solutions</option>
+                                                        <option value="Cloud Services">Cloud Services</option>
+                                                        <option value="Cyber Security">Cyber Security</option>
+                                                        <option value="IT Support & Maintenance">IT Support & Maintenance</option>
+                                                    </optgroup>
+
+                                                    <optgroup label="Digital Marketing">
+                                                        <option value="SEO (Search Engine Optimization)">SEO (Search Engine Optimization)</option>
+                                                        <option value="SMM (Social Media Marketing)">SMM (Social Media Marketing)</option>
+                                                        <option value="PPC (Pay-Per-Click)">PPC (Pay-Per-Click)</option>
+                                                        <option value="Content Marketing">Content Marketing</option>
+                                                        <option value="Email Marketing">Email Marketing</option>
+                                                        <option value="Brand Strategy">Brand Strategy</option>
+                                                    </optgroup>
+
+                                                    <optgroup label="HR Services">
+                                                        <option value="Recruitment & Staffing">Recruitment & Staffing</option>
+                                                        <option value="Training & Development">Training & Development</option>
+                                                    </optgroup>
+                                                </>
+                                            )}
+
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>
@@ -394,7 +541,7 @@ const ServiceInquiryForm = ({ id, variant = 'default' }) => {
                             </button>
                         </div>
                     </form>
-                </div>
+                </div >
             </div >
         </section >
     );

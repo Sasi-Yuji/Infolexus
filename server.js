@@ -84,16 +84,20 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
         // Save to local JSON "database"
         saveApplication(applicationData);
 
+        // Determine recipient based on recipientType
+        const recipientType = req.body.recipientType || 'support'; // Default to support
+        const emailUser = recipientType === 'mani' ? process.env.MANI_EMAIL : process.env.SUPPORT_EMAIL;
+        const emailPass = recipientType === 'mani' ? process.env.MANI_EMAIL_PASS : process.env.SUPPORT_EMAIL_PASS;
+
         // Attempt to send email
         try {
             const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                host: 'smtp.gmail.com',
-                port: 587,
-                secure: false,
+                host: process.env.SMTP_HOST || 'mail.infolexus.com',
+                port: parseInt(process.env.SMTP_PORT) || 465,
+                secure: true,
                 auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_PASS
+                    user: emailUser,
+                    pass: emailPass
                 }
             });
 
@@ -103,9 +107,9 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
                 .join('');
 
             const mailOptions = {
-                from: process.env.EMAIL_USER,
+                from: emailUser,
                 replyTo: email,
-                to: process.env.EMAIL_USER,
+                to: emailUser, // Send to same address (mani or support)
                 subject: `New Application: ${position || 'Placement Support'} - ${name}`,
                 html: `
                     <h2>New Application Received</h2>
