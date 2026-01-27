@@ -25,7 +25,7 @@ This creates a `dist` folder containing your optimized website.
     *   `uploads` (folder - if it exists, or create an empty one)
     *   `server.js`
     *   `package.json`
-    *   `.env` (make sure your email password is in here)
+    *   `.env` (make sure your email password is in here and **DISABLE_EMAIL=false**)
     *   `applications.json` (if you have one, or let the server create it)
 
 ### Step 3: Upload to cPanel

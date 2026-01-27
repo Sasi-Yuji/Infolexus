@@ -69,6 +69,17 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
         console.log('Received application from:', name);
         console.log('File saved:', file ? file.filename : 'No file');
 
+        // Format date in IST (Indian Standard Time)
+        const istDate = new Date().toLocaleString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+
         const applicationData = {
             id: Date.now(),
             name,
@@ -79,7 +90,8 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
             ...otherFields, // Save all other fields (college, degree, etc.)
             resumePath: file ? `/uploads/${file.filename}` : null,
             originalResumeName: file ? file.originalname : null,
-            date: new Date().toISOString()
+            date: istDate,
+            dateISO: new Date().toISOString()
         };
 
         // Save to local JSON "database"
@@ -90,50 +102,70 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
         const emailUser = recipientType === 'mani' ? process.env.MANI_EMAIL : process.env.SUPPORT_EMAIL;
         const emailPass = recipientType === 'mani' ? process.env.MANI_EMAIL_PASS : process.env.SUPPORT_EMAIL_PASS;
 
+        // Determine SMTP host - Use .env value or auto-detect
+        // If MANI_EMAIL is a Google Workspace email, we must use smtp.gmail.com
+        const smtpHost = process.env.SMTP_HOST || (emailUser.includes('@gmail.com') ? 'smtp.gmail.com' : 'mail.infolexus.com');
+        const smtpPort = parseInt(process.env.SMTP_PORT) || 465;
+
         // Attempt to send email
-        try {
-            const transporter = nodemailer.createTransport({
-                host: process.env.SMTP_HOST || 'mail.infolexus.com',
-                port: parseInt(process.env.SMTP_PORT) || 465,
-                secure: true,
-                auth: {
-                    user: emailUser,
-                    pass: emailPass
-                }
-            });
-
-            // Construct dynamic field list for email
-            const otherFieldsHtml = Object.entries(otherFields)
-                .map(([key, value]) => `<p><strong>${key.replace(/([A-Z])/g, ' $1').trim()}:</strong> ${value}</p>`)
-                .join('');
-
-            const mailOptions = {
-                from: emailUser,
-                replyTo: email,
-                to: emailUser, // Send to same address (mani or support)
-                subject: `New Application: ${position || 'Placement Support'} - ${name}`,
-                html: `
-                    <h2>New Application Received</h2>
-                    <p><strong>Name:</strong> ${name}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Phone:</strong> ${phone}</p>
-                    <p><strong>Position/Type:</strong> ${position || 'Student/Job Seeker'}</p>
-                    ${otherFieldsHtml}
-                    <p><strong>Message:</strong><br>${message || 'No message provided'}</p>
-                    ${applicationData.resumePath ? `<p><strong>Resume:</strong> <a href="${BASE_URL}${applicationData.resumePath}">Download Resume</a></p>` : ''}
-                `,
-                attachments: file ? [
-                    {
-                        filename: file.originalname,
-                        path: file.path
+        if (process.env.DISABLE_EMAIL === 'true') {
+            console.log('📧 Email sending disabled (local dev mode). Application saved locally.');
+        } else {
+            try {
+                const transporter = nodemailer.createTransport({
+                    host: smtpHost,
+                    port: smtpPort,
+                    secure: smtpPort === 465, // true for 465 (SSL), false for 587 (STARTTLS)
+                    auth: {
+                        user: emailUser,
+                        pass: emailPass
                     }
-                ] : []
-            };
+                });
 
-            await transporter.sendMail(mailOptions);
-            console.log('Email sent successfully');
-        } catch (emailError) {
-            console.error('Email sending failed, but application saved:', emailError);
+                // Construct dynamic field list for email
+                const otherFieldsHtml = Object.entries(otherFields)
+                    .map(([key, value]) => `<p><strong>${key.replace(/([A-Z])/g, ' $1').trim()}:</strong> ${value}</p>`)
+                    .join('');
+
+                const mailOptions = {
+                    from: `"Infolexus Application" <${emailUser}>`, // Better display name
+                    replyTo: email,
+                    to: emailUser, // Send to same address (mani or support)
+                    subject: `New Application: ${position || 'Placement Support'} - ${name}`,
+                    headers: {
+                        'X-Priority': '1',
+                        'X-MSMail-Priority': 'High',
+                        'Importance': 'high'
+                    },
+                    html: `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <h2 style="color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 10px;">New Application Received</h2>
+                        <p><strong>Submitted on:</strong> ${istDate}</p>
+                        <hr style="border: 1px solid #e5e7eb; margin: 20px 0;" />
+                        <p><strong>Name:</strong> ${name}</p>
+                        <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                        <p><strong>Phone:</strong> ${phone}</p>
+                        <p><strong>Position/Type:</strong> ${position || 'Student/Job Seeker'}</p>
+                        ${otherFieldsHtml}
+                        <p><strong>Message:</strong><br>${message || 'No message provided'}</p>
+                        ${applicationData.resumePath ? `<p><strong>Resume:</strong> <a href="${BASE_URL}${applicationData.resumePath}" style="color: #2563eb;">Download Resume</a></p>` : ''}
+                        <hr style="border: 1px solid #e5e7eb; margin: 20px 0;" />
+                        <p style="color: #6b7280; font-size: 12px;">This email was sent from Infolexus website contact form.</p>
+                    </div>
+                `,
+                    attachments: file ? [
+                        {
+                            filename: file.originalname,
+                            path: file.path
+                        }
+                    ] : []
+                };
+
+                await transporter.sendMail(mailOptions);
+                console.log('Email sent successfully');
+            } catch (emailError) {
+                console.error('Email sending failed, but application saved:', emailError);
+            }
         }
 
         res.status(200).json({ success: true, message: 'Application submitted successfully' });
