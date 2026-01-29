@@ -10,6 +10,7 @@ const UpskillingRegistrationModal = ({ isOpen, onClose, initialCourse = '' }) =>
         fullName: '',
         mobile: '',
         email: '',
+        location: '',
         collegeName: '',
         degree: '',
         passingYear: '',
@@ -44,22 +45,35 @@ const UpskillingRegistrationModal = ({ isOpen, onClose, initialCourse = '' }) =>
         setIsSubmitting(true);
         setSubmitStatus(null);
 
-        const endpoint = "https://formsubmit.co/ajax/support@infolexus.com";
+        const endpoint = "/send-application"; // Use our own backend
 
         try {
+            const formDataToSend = new FormData();
+            formDataToSend.append('name', formData.fullName);
+            formDataToSend.append('email', formData.email);
+            formDataToSend.append('phone', formData.mobile);
+            formDataToSend.append('location', formData.location);
+            formDataToSend.append('position', `Upskilling Registration - ${formData.interestedCourse}`);
+            formDataToSend.append('recipientType', 'support'); // Route to support@infolexus.com
+
+            // Field mapping
+            formDataToSend.append('College', formData.collegeName);
+            formDataToSend.append('Degree', formData.degree);
+            formDataToSend.append('PassingYear', formData.passingYear);
+            formDataToSend.append('InterestedCourse', formData.interestedCourse);
+            formDataToSend.append('LearningMode', formData.learningMode);
+            formDataToSend.append('CurrentStatus', formData.currentStatus);
+            formDataToSend.append('Experience', formData.experience);
+            formDataToSend.append('PreferredContactTime', formData.preferredContactTime);
+            formDataToSend.append('Source', formData.source);
+
+            // Message field is required by backend, so we create a composite one
+            const message = `Registration for ${formData.interestedCourse}. Mode: ${formData.learningMode}. Status: ${formData.currentStatus}.`;
+            formDataToSend.append('message', message);
+
             const response = await fetch(endpoint, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    _subject: `New Upskilling Registration: ${formData.fullName} - ${formData.interestedCourse}`,
-                    ...formData,
-                    _template: 'table',
-                    _captcha: "false",
-                    _autoresponse: "Thank you for registering for the Upskilling Course. Our team will contact you shortly."
-                })
+                body: formDataToSend
             });
 
             if (response.ok) {
@@ -72,6 +86,7 @@ const UpskillingRegistrationModal = ({ isOpen, onClose, initialCourse = '' }) =>
                         fullName: '',
                         mobile: '',
                         email: '',
+                        location: '',
                         collegeName: '',
                         degree: '',
                         passingYear: '',
@@ -181,6 +196,20 @@ const UpskillingRegistrationModal = ({ isOpen, onClose, initialCourse = '' }) =>
                                                 onChange={handleChange}
                                                 className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 text-sm"
                                                 placeholder="email@example.com"
+                                            />
+                                        </div>
+
+                                        {/* 3b. Location */}
+                                        <div className="col-span-1">
+                                            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Current Location</label>
+                                            <input
+                                                type="text"
+                                                name="location"
+                                                required
+                                                value={formData.location}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 text-sm"
+                                                placeholder="City, State"
                                             />
                                         </div>
 

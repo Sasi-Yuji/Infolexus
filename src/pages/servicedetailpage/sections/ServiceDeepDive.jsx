@@ -282,7 +282,7 @@ const themes = {
 };
 
 const ServiceDeepDive = ({ service, variant = 'it' }) => {
-    console.log('Rendering ServiceDeepDive for:', service?.title, 'Variant:', variant);
+
     if (!service) return null;
     const theme = themes[variant] || themes.it;
 

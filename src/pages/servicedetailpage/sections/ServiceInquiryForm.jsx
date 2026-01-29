@@ -83,7 +83,14 @@ const ServiceInquiryForm = ({ id, variant = 'default' }) => {
             formDataToSend.append('email', formData.email);
             formDataToSend.append('phone', formData.phone);
             formDataToSend.append('position', position);
-            formDataToSend.append('recipientType', 'support'); // Route to support@infolexus.com
+            // Default is support, but making it explicit for clarity
+            if (variant !== 'job-seeker' && variant !== 'college') {
+                formDataToSend.append('recipientType', 'support');
+            } else {
+                // Even job-seeker/college variants for ServiceInquiry go to support as per logic 
+                // (only ApplicationForm goes to Mani)
+                formDataToSend.append('recipientType', 'support');
+            }
 
             // Add userType for job-seeker variant
             if (variant === 'job-seeker') {
@@ -209,6 +216,10 @@ const ServiceInquiryForm = ({ id, variant = 'default' }) => {
                                         <div>
                                             <label className="block text-sm font-bold text-slate-700 mb-1">Email <span className="text-red-500">*</span></label>
                                             <input type="email" name="email" required placeholder="email@example.com" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Current Location <span className="text-red-500">*</span></label>
+                                            <input type="text" name="location" required placeholder="City, State" value={formData.location} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none" />
                                         </div>
                                         <div>
                                             <label className="block text-sm font-bold text-slate-700 mb-1">Interested Course <span className="text-red-500">*</span></label>
@@ -469,8 +480,7 @@ const ServiceInquiryForm = ({ id, variant = 'default' }) => {
                                                     <option value="Mobile App Development">Mobile App Development</option>
                                                     <option value="Enterprise Solutions">Enterprise Solutions</option>
                                                     <option value="Cloud Services">Cloud Services</option>
-                                                    <option value="Cyber Security">Cyber Security</option>
-                                                    <option value="IT Support & Maintenance">IT Support & Maintenance</option>
+                                                    <option value="Cyber Security">UI & UX Design</option>
                                                 </>
                                             )}
 

@@ -66,8 +66,7 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
         const { name, email, phone, position, message, ...otherFields } = req.body;
         const file = req.file;
 
-        console.log('Received application from:', name);
-        console.log('File saved:', file ? file.filename : 'No file');
+
 
         // Format date in IST (Indian Standard Time)
         const istDate = new Date().toLocaleString('en-IN', {
@@ -102,6 +101,8 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
         const emailUser = recipientType === 'mani' ? process.env.MANI_EMAIL : process.env.SUPPORT_EMAIL;
         const emailPass = recipientType === 'mani' ? process.env.MANI_EMAIL_PASS : process.env.SUPPORT_EMAIL_PASS;
 
+
+
         // Determine SMTP host - Use .env value or auto-detect
         // If MANI_EMAIL is a Google Workspace email, we must use smtp.gmail.com
         const smtpHost = process.env.SMTP_HOST || (emailUser.includes('@gmail.com') ? 'smtp.gmail.com' : 'mail.infolexus.com');
@@ -109,9 +110,14 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
 
         // Attempt to send email
         if (process.env.DISABLE_EMAIL === 'true') {
-            console.log('📧 Email sending disabled (local dev mode). Application saved locally.');
+
         } else {
+
+
             try {
+                if (!emailUser || !emailPass) {
+                    throw new Error('Missing email credentials for ' + (recipientType === 'mani' ? 'Mani' : 'Support'));
+                }
                 const transporter = nodemailer.createTransport({
                     host: smtpHost,
                     port: smtpPort,
@@ -127,10 +133,14 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
                     .map(([key, value]) => `<p><strong>${key.replace(/([A-Z])/g, ' $1').trim()}:</strong> ${value}</p>`)
                     .join('');
 
+                // Sanitize filename for email attachment (remove non-standard chars)
+                // Sanitize filename if exists
+                const sanitizedFilename = file ? file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_') : null;
+
                 const mailOptions = {
-                    from: `"Infolexus Application" <${emailUser}>`, // Better display name
+                    from: `"Infolexus Application" <${emailUser}>`,
                     replyTo: email,
-                    to: emailUser, // Send to same address (mani or support)
+                    to: emailUser,
                     subject: `New Application: ${position || 'Placement Support'} - ${name}`,
                     headers: {
                         'X-Priority': '1',
@@ -148,21 +158,21 @@ app.post('/send-application', upload.single('attachment'), async (req, res) => {
                         <p><strong>Position/Type:</strong> ${position || 'Student/Job Seeker'}</p>
                         ${otherFieldsHtml}
                         <p><strong>Message:</strong><br>${message || 'No message provided'}</p>
-                        ${applicationData.resumePath ? `<p><strong>Resume:</strong> <a href="${BASE_URL}${applicationData.resumePath}" style="color: #2563eb;">Download Resume</a></p>` : ''}
+                        ${applicationData.resumePath ? `<p><strong>Resume:</strong> <a href="${BASE_URL}${applicationData.resumePath}" style="color: #2563eb;">Download Resume (Server must be running)</a></p>` : ''}
                         <hr style="border: 1px solid #e5e7eb; margin: 20px 0;" />
                         <p style="color: #6b7280; font-size: 12px;">This email was sent from Infolexus website contact form.</p>
                     </div>
                 `,
                     attachments: file ? [
                         {
-                            filename: file.originalname,
-                            path: file.path
+                            filename: sanitizedFilename,
+                            path: path.join(__dirname, file.path)
                         }
                     ] : []
                 };
 
                 await transporter.sendMail(mailOptions);
-                console.log('Email sent successfully');
+
             } catch (emailError) {
                 console.error('Email sending failed, but application saved:', emailError);
             }
@@ -200,5 +210,5 @@ app.get('/api/applications', (req, res) => {
 // });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+
 });

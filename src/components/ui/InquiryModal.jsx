@@ -12,6 +12,8 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
         name: '',
         mobile: '',
         email: '',
+        location: '',
+
 
         // Placement Specific
         college: '',
@@ -52,6 +54,7 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
                 const formDataToSend = new FormData();
                 formDataToSend.append('name', formData.name);
                 formDataToSend.append('email', formData.email);
+                formDataToSend.append('location', formData.location);
                 formDataToSend.append('phone', formData.mobile);
                 formDataToSend.append('position', 'Placement Candidate');
 
@@ -98,6 +101,7 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
                 const formDataToSend = new FormData();
                 formDataToSend.append('name', formData.name);
                 formDataToSend.append('email', formData.email);
+                formDataToSend.append('location', formData.location);
                 formDataToSend.append('phone', formData.mobile);
                 formDataToSend.append('position', 'Recruitment Inquiry');
                 formDataToSend.append('CompanyName', formData.companyName);
@@ -137,7 +141,7 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
         setSubmitStatus(null);
         setResumeFile(null);
         setFormData({
-            name: '', mobile: '', email: '', college: '', degree: '', customDegree: '',
+            name: '', mobile: '', email: '', location: '', college: '', degree: '', customDegree: '',
             year: '', customYear: '', course: '', customCourse: '',
             currentStatus: 'Fresher', yearsOfExperience: '', skills: '',
             companyName: '', requirementType: '', message: ''
@@ -229,6 +233,14 @@ const InquiryModal = ({ isOpen, onClose, type = 'placement' }) => {
                                                 name="email" required value={formData.email} onChange={handleChange} type="email"
                                                 className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm"
                                                 placeholder="email@example.com"
+                                            />
+                                        </div>
+                                        <div className="space-y-1 sm:col-span-2">
+                                            <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Current Location</label>
+                                            <input
+                                                name="location" required value={formData.location} onChange={handleChange}
+                                                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm"
+                                                placeholder="City, State"
                                             />
                                         </div>
                                     </div>

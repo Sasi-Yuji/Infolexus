@@ -17,7 +17,9 @@ const HRInquiryModal = ({ isOpen, onClose, initialCategory = 'Job Seeker', initi
         organization: '', // For Company/College
         experience: '', // For Job Seeker
         qualification: '', // For Job Seeker
-        message: ''
+
+        message: '',
+        location: ''
     });
 
     // Update category if initial prop changes
@@ -26,6 +28,7 @@ const HRInquiryModal = ({ isOpen, onClose, initialCategory = 'Job Seeker', initi
             setFormData(prev => ({
                 ...prev,
                 category: initialCategory,
+                location: '',
                 organization: '',
                 experience: '',
                 qualification: '',
@@ -53,25 +56,30 @@ const HRInquiryModal = ({ isOpen, onClose, initialCategory = 'Job Seeker', initi
         setIsSubmitting(true);
         setSubmitStatus(null);
 
-        const endpoint = "https://formsubmit.co/ajax/support@infolexus.com";
+        const endpoint = "/send-application"; // Use our own backend
 
         try {
             // Create FormData object to support file uploads
             const formDataToSend = new FormData();
 
             // Add form fields
-            formDataToSend.append('_subject', `Infolexus - HR Inquiry: ${formData.category} - ${formData.name}`);
             formDataToSend.append('name', formData.name);
             formDataToSend.append('email', formData.email);
             formDataToSend.append('phone', formData.phone);
+            formDataToSend.append('location', formData.location);
             formDataToSend.append('category', formData.category);
+            // Determine recipient based on category
+            const recipient = formData.category === 'Job Seeker' ? 'mani' : 'support';
+            formDataToSend.append('recipientType', recipient);
 
             // Add category-specific fields
             if (formData.category === 'Job Seeker') {
                 if (formData.qualification) formDataToSend.append('qualification', formData.qualification);
                 if (formData.experience) formDataToSend.append('experience', formData.experience);
+                formDataToSend.append('position', 'HR Inquiry - Job Seeker');
             } else {
                 if (formData.organization) formDataToSend.append('organization', formData.organization);
+                formDataToSend.append('position', `HR Inquiry - ${formData.category}`);
             }
 
             formDataToSend.append('message', formData.message);
@@ -81,17 +89,9 @@ const HRInquiryModal = ({ isOpen, onClose, initialCategory = 'Job Seeker', initi
                 formDataToSend.append('attachment', resumeFile);
             }
 
-            // FormSubmit configuration
-            formDataToSend.append('_template', 'table');
-            formDataToSend.append('_captcha', 'false');
-            formDataToSend.append('_autoresponse', 'Thank you for your inquiry to Infolexus. Our team will contact you shortly.');
-
             const response = await fetch(endpoint, {
                 method: "POST",
-                headers: {
-                    'Accept': 'application/json'
-                },
-                body: formDataToSend
+                body: formDataToSend // Content-Type is set automatically by fetch for FormData
             });
 
             if (response.ok) {
@@ -213,6 +213,19 @@ const HRInquiryModal = ({ isOpen, onClose, initialCategory = 'Job Seeker', initi
                                                 onChange={handleChange}
                                                 className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 text-sm text-slate-900 placeholder:text-slate-400"
                                                 placeholder="+91 98765 43210"
+                                            />
+                                        </div>
+
+                                        <div className="col-span-1">
+                                            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Current Location</label>
+                                            <input
+                                                type="text"
+                                                name="location"
+                                                required
+                                                value={formData.location}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 text-sm text-slate-900 placeholder:text-slate-400"
+                                                placeholder="City, State"
                                             />
                                         </div>
                                     </div>

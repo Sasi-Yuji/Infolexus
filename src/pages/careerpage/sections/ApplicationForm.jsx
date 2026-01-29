@@ -13,6 +13,7 @@ const ApplicationForm = () => {
         email: '',
         phone: '',
         position: '',
+        location: '',
         message: '',
         experienceLevel: 'Fresher',
         yearsOfExperience: '',
@@ -45,6 +46,8 @@ const ApplicationForm = () => {
             formDataToSend.append('name', formData.name);
             formDataToSend.append('email', formData.email);
             formDataToSend.append('phone', formData.phone);
+            formDataToSend.append('phone', formData.phone);
+            formDataToSend.append('location', formData.location);
             formDataToSend.append('position', formData.position);
             formDataToSend.append('experienceLevel', formData.experienceLevel);
             if (formData.yearsOfExperience) formDataToSend.append('yearsOfExperience', formData.yearsOfExperience);
@@ -72,6 +75,7 @@ const ApplicationForm = () => {
                         phone: '',
                         position: '',
                         message: '',
+                        location: '',
                         experienceLevel: 'Fresher',
                         yearsOfExperience: '',
                         isCustomPosition: false
@@ -157,6 +161,19 @@ const ApplicationForm = () => {
                         onChange={handleChange}
                         className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 text-sm font-medium"
                         placeholder="+91 98765 43210"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Current Location</label>
+                    <input
+                        type="text"
+                        name="location"
+                        required
+                        value={formData.location}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 text-sm font-medium"
+                        placeholder="City, State"
                     />
                 </div>
 

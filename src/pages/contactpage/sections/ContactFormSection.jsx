@@ -8,7 +8,9 @@ const ContactFormSection = () => {
 
     const [formData, setFormData] = useState({
         name: '',
+        name: '',
         email: '',
+        location: '',
         subject: '',
         message: ''
     });
@@ -29,6 +31,8 @@ const ContactFormSection = () => {
             const formDataToSend = new FormData();
             formDataToSend.append('name', formData.name);
             formDataToSend.append('email', formData.email);
+            formDataToSend.append('email', formData.email);
+            formDataToSend.append('location', formData.location);
             formDataToSend.append('phone', ''); // Contact form doesn't have phone
             formDataToSend.append('position', 'Contact Us Inquiry');
             formDataToSend.append('subject', formData.subject);
@@ -48,6 +52,8 @@ const ContactFormSection = () => {
                     setFormData({
                         name: '',
                         email: '',
+                        email: '',
+                        location: '',
                         subject: '',
                         message: ''
                     });
@@ -175,6 +181,20 @@ const ContactFormSection = () => {
                                 />
                             </div>
                         </div>
+                        <div className="space-y-2">
+                            <label htmlFor="location" className="text-sm font-medium text-slate-700">Current Location</label>
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
+                                required
+                                value={formData.location}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all text-slate-900 placeholder:text-slate-400"
+                                placeholder="City, State"
+                            />
+                        </div>
+
 
                         <div className="space-y-2">
                             <label htmlFor="subject" className="text-sm font-medium text-slate-700">Subject</label>
@@ -217,10 +237,10 @@ const ContactFormSection = () => {
                         </button>
                     </form>
                 </div>
-            </div>
+            </div >
 
             {/* Map Section */}
-            <div className="mt-16 w-full h-[400px] rounded-3xl overflow-hidden shadow-xl border border-slate-200">
+            < div className="mt-16 w-full h-[400px] rounded-3xl overflow-hidden shadow-xl border border-slate-200" >
                 <iframe
                     title="Office Location"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.347263595567!2d76.9889976757065!3d11.006997092116035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859eb03584a43%3A0x32befeb42d4f385a!2sInfolexus%20Solutions!5e0!3m2!1sen!2sin!4v1713437292323!5m2!1sen!2sin"
@@ -229,8 +249,8 @@ const ContactFormSection = () => {
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
